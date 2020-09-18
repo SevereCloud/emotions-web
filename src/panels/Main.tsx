@@ -4,6 +4,8 @@ import MapComponent from '../components/Map/Map';
 import type { AppearanceSchemeType } from '@vkontakte/vk-bridge';
 import type { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
 import { Icon16Clear } from '@vkontakte/icons';
+import type { Wall } from '../api';
+import type { ThemePoint, ThemeWalls } from '../types';
 
 // interface MainState {}
 
@@ -20,6 +22,9 @@ export interface MainProps {
   zoom: number;
 
   updateMap?: (center: [number, number], zoom: number) => void;
+
+  themePoints: ThemePoint[];
+  themeWalls: ThemeWalls; // FIXME: удалить, нужно только для дебага
 }
 
 interface MainState {
@@ -65,7 +70,15 @@ export class Main extends React.Component<MainProps, MainState> {
   }
 
   render(): JSX.Element {
-    const { scheme, vkAPI, center, zoom, updateMap } = this.props;
+    const {
+      scheme,
+      vkAPI,
+      center,
+      zoom,
+      updateMap,
+      themePoints,
+      themeWalls,
+    } = this.props;
     const { snackbar } = this.state;
 
     return (
@@ -77,6 +90,8 @@ export class Main extends React.Component<MainProps, MainState> {
           scheme={scheme}
           updateMap={updateMap}
           error={(a, b) => this.error(a, b)}
+          themePoints={themePoints}
+          themeWalls={themeWalls}
         />
         <FixedLayout filled vertical="bottom">
           <Div>TODO: Поиск</Div>

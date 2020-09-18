@@ -3,6 +3,8 @@ export interface ApiNewsfeedSearchResponse {
   next_from: string;
   count: number;
   total_count: number;
+  profiles: Profile[];
+  groups: Group[];
 }
 
 export interface Wall {
@@ -191,4 +193,39 @@ export interface WallReposts {
 
 export interface WallViews {
   count: number;
+}
+
+export interface Profile {
+  id: number;
+  first_name: string;
+  last_name: string;
+  is_closed: boolean;
+  can_access_closed: boolean;
+  sex: number;
+  screen_name: string;
+  photo_50: string;
+  photo_100: string;
+  online: number;
+  online_info: OnlineInfo;
+  online_app?: number;
+  online_mobile?: number;
+}
+
+export interface OnlineInfo {
+  visible: boolean;
+  last_seen?: number;
+  is_online: boolean;
+  app_id?: number;
+  is_mobile: boolean;
+}
+
+export interface Group {
+  id: number;
+  name: string;
+  screen_name: string;
+  is_closed: number;
+  type: string;
+  photo_50: string;
+  photo_100: string;
+  photo_200: string;
 }
