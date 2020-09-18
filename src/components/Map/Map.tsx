@@ -7,7 +7,9 @@ import { Icon28LocationOutline } from '@vkontakte/icons';
 import ButtonFloating from '../ButtonFloating/ButtonFloating';
 import Layer from './layer';
 import Feature from './feature';
-import { isLaunchFromVK } from '../../lib';
+import { getCord, isLaunchFromVK } from '../../lib';
+import type { Wall } from '../../api';
+import type { ThemePoint, ThemeWalls } from '../../types';
 
 /**
  * Токен для mapbox
@@ -86,6 +88,9 @@ export interface MapProps {
   movingMethod?: 'jumpTo' | 'easeTo' | 'flyTo';
 
   error: (msg: string, duration?: number) => void;
+
+  themePoints: ThemePoint[];
+  themeWalls: { [key: string]: Wall[] }; // FIXME: удалить, нужно только для дебага
 }
 
 interface MapState {
@@ -384,7 +389,7 @@ export class MapComponent extends React.Component<MapProps, MapState> {
   }
 
   render(): JSX.Element {
-    const { scheme } = this.props;
+    const { scheme, themePoints, themeWalls } = this.props;
     const { ready, isGetGeodata, map, userCenter } = this.state;
 
     return (
@@ -417,6 +422,44 @@ export class MapComponent extends React.Component<MapProps, MapState> {
             >
               {userCenter && <Feature coordinates={userCenter} />}
             </Layer>
+            {/* Тематические точки */}
+            <Layer
+              map={map}
+              id="theme"
+              type="circle"
+              paint={{
+                'circle-radius': 4,
+                'circle-color': accent(scheme),
+                'circle-stroke-width': 3,
+                'circle-stroke-color': background_content(scheme),
+              }}
+            >
+              {themePoints.map((themePoint) => (
+                // eslint-disable-next-line react/jsx-key
+                <Feature coordinates={themePoint.center} />
+              ))}
+            </Layer>
+
+            {/* Тематические точки */}
+            {Object.keys(themeWalls).map((key) => (
+              // eslint-disable-next-line react/jsx-key
+              <Layer
+                map={map}
+                id={`post${key}`}
+                type="circle"
+                paint={{
+                  'circle-radius': 1,
+                  'circle-color': background_content(scheme),
+                  'circle-stroke-width': 1,
+                  'circle-stroke-color': accent(scheme),
+                }}
+              >
+                {themeWalls[key].map((wall) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <Feature coordinates={getCord(wall.geo.coordinates)} />
+                ))}
+              </Layer>
+            ))}
           </>
         )}
 
