@@ -8,10 +8,22 @@ import ButtonFloating from '../ButtonFloating/ButtonFloating.js';
 import Layer from './layer.js';
 import Feature from './feature.js';
 import { getCord, isLaunchFromVK } from '../../lib.js';
-
+import { themeImage } from '../../types.js';
+import Image from './image.js';
+import art from '../../markers/art.png.proxy.js';
+import auto from '../../markers/auto.png.proxy.js';
+import fall from '../../markers/fall.png.proxy.js';
+import film from '../../markers/film.png.proxy.js';
+import game from '../../markers/game.png.proxy.js';
+import it from '../../markers/it.png.proxy.js';
+import music from '../../markers/music.png.proxy.js';
+import quarantine from '../../markers/quarantine.png.proxy.js';
+import work from '../../markers/work.png.proxy.js';
+import comedy from '../../markers/comedy.png.proxy.js';
 /**
  * Токен для mapbox
  */
+
 const TOKEN = 'pk.eyJ1Ijoic2V2ZXJlY2xvdWQiLCJhIjoiY2lxdW5sc2tjMDA1OWh3bml2c3dlMWZ2eSJ9.HVh-skFXU-Ck2fY1aRmNew';
 /**
  * Список лейблов, для которых необходимо установить язык.
@@ -30,17 +42,17 @@ const style = scheme => scheme === 'space_gray' ? 'mapbox://styles/mapbox/dark-v
  *
  * @param scheme цветовая схема
  */
-// const textColor = (scheme: AppearanceSchemeType) =>
-//   scheme === 'space_gray' ? 'hsl(78, 55%, 100%)' : 'hsl(31, 50%, 15%)';
 
+
+const textColor = scheme => scheme === 'space_gray' ? 'hsl(78, 55%, 100%)' : 'hsl(31, 50%, 15%)';
 /**
  * Возвращает цвет обводки текста
  *
  * @param scheme цветовая схема
  */
-// const textHaloColor = (scheme: AppearanceSchemeType) =>
-//   scheme === 'space_gray' ? 'hsl(31, 50%, 15%)' : 'hsl(78, 55%, 100%)';
 
+
+const textHaloColor = scheme => scheme === 'space_gray' ? 'hsl(31, 50%, 15%)' : 'hsl(78, 55%, 100%)';
 /**
  * Возвращает accent цвет
  *
@@ -363,7 +375,47 @@ export class MapComponent extends React.Component {
         left: 0,
         bottom: 48
       }
-    }), ready && map && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Layer, {
+    }), ready && map && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-art",
+      url: art
+    }), /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-auto",
+      url: auto
+    }), /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-fall",
+      url: fall
+    }), /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-film",
+      url: film
+    }), /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-game",
+      url: game
+    }), /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-it",
+      url: it
+    }), /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-music",
+      url: music
+    }), /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-quarantine",
+      url: quarantine
+    }), /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-work",
+      url: work
+    }), /*#__PURE__*/React.createElement(Image, {
+      map: map,
+      id: "image-comedy",
+      url: comedy
+    }), /*#__PURE__*/React.createElement(Layer, {
       map: map,
       id: "user",
       type: "circle",
@@ -380,15 +432,30 @@ export class MapComponent extends React.Component {
       id: "theme",
       type: "circle",
       paint: {
-        'circle-radius': 4,
-        'circle-color': accent(scheme),
-        'circle-stroke-width': 3,
-        'circle-stroke-color': background_content(scheme)
+        'circle-radius': 30,
+        'circle-color': background_content(scheme)
       }
     }, themePoints.map(themePoint =>
     /*#__PURE__*/
     // eslint-disable-next-line react/jsx-key
     React.createElement(Feature, {
+      coordinates: themePoint.center
+    }))), /*#__PURE__*/React.createElement(Layer, {
+      map: map,
+      id: "theme-symbol",
+      type: "symbol",
+      layout: {
+        'icon-image': ['get', 'image'],
+        'icon-size': ['get', 'size']
+      }
+    }, themePoints.map(themePoint =>
+    /*#__PURE__*/
+    // eslint-disable-next-line react/jsx-key
+    React.createElement(Feature, {
+      properties: {
+        image: themeImage['Игры'],
+        size: 0.4
+      },
       coordinates: themePoint.center
     }))), Object.keys(themeWalls).map(key =>
     /*#__PURE__*/

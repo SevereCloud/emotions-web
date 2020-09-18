@@ -168,6 +168,9 @@ export class App extends React.Component {
       prevLoadCenter: center,
       themePoints: themePoints
     });
+    console.log(center);
+    console.log(center[0].toFixed(5));
+    console.log(center[1].toFixed(5));
     Object.entries(themeSearch).forEach(([key, value]) => {
       const k = key;
       vkAPI.callAPIMethod('newsfeed.search', {

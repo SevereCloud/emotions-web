@@ -1,0 +1,1 @@
+export default "/_dist_/markers/fall.png";
