@@ -10,6 +10,9 @@ import type {
   UpdateConfigData,
 } from '@vkontakte/vk-bridge';
 import type { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
+
+import AppCTX from './appContext';
+
 import { Main } from './panels/Main';
 import { Newsfeed } from './panels/Newsfeed';
 
@@ -34,7 +37,7 @@ interface AppState {
    * Все посты по темам
    */
   themeWalls: ThemeWalls;
-
+  selectedTheme: Theme;
   /**
    * Количество постов в определенных точках
    */
@@ -76,6 +79,7 @@ export class App extends React.Component<AppProps, AppState> {
         Юмор: [],
         Фотографии: [],
       },
+      selectedTheme: 'Фотографии',
       themePoints: [],
 
       prevLoadCenter: [30.3, 59.9],
@@ -338,27 +342,38 @@ export class App extends React.Component<AppProps, AppState> {
       themePoints,
       themeWalls,
     } = this.state;
-    console.log('RENDER', activePanel)
+    console.log(themeWalls)
     return (
-      <Root activeView={activeView}>
-        <View id="main" activePanel={activePanel}>
-          <Panel id="newsfeed">
-            <Newsfeed goBack={() => this.setPanel('map')} />
-          </Panel>
-          <Panel id="map">
-            <Main
-              setPanel={this.setPanel}
-              scheme={scheme}
-              vkAPI={vkAPI}
-              center={center}
-              zoom={zoom}
-              updateMap={(center, zoom) => this.updateMap(center, zoom)}
-              themePoints={themePoints}
-              themeWalls={themeWalls}
-            />
-          </Panel>
-        </View>
-      </Root>
+      <AppCTX.Provider
+        value={{
+          getUser: this.getUser,
+          getGroup: this.getGroup,
+        }}
+      >
+        <Root activeView={activeView}>
+          <View id="main" activePanel={activePanel}>
+            <Panel id="newsfeed">
+              <Newsfeed
+                setPanel={this.setPanel}
+                theme={this.state.selectedTheme}
+                walls={this.state.themeWalls[this.state.selectedTheme]}
+              />
+            </Panel>
+            <Panel id="map">
+              <Main
+                setPanel={this.setPanel}
+                scheme={scheme}
+                vkAPI={vkAPI}
+                center={center}
+                zoom={zoom}
+                updateMap={(center, zoom) => this.updateMap(center, zoom)}
+                themePoints={themePoints}
+                themeWalls={themeWalls}
+              />
+            </Panel>
+          </View>
+        </Root>
+      </AppCTX.Provider>
     );
   }
 }

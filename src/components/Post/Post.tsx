@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react';
+import React, { FC, HTMLAttributes, useContext } from 'react';
 import {
   SimpleCell,
   usePlatform,
@@ -8,7 +8,9 @@ import {
   Tappable,
 } from '@vkontakte/vkui';
 import type { HasRootRef } from '@vkontakte/vkui/dist/types';
-import type { Author } from '../../types';
+import type {Wall} from '../../api';
+import type { Author, ctxValue } from '../../types';
+import AppCTX from '../../appContext';
 import PostBar from '../PostBar/PostBar';
 
 export interface PostProps
@@ -21,6 +23,7 @@ export interface PostProps
   comments: number;
   reposts: number;
   views: string;
+  wall: Wall;
 }
 
 const Post: FC<PostProps> = ({
@@ -35,6 +38,8 @@ const Post: FC<PostProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
+  const ctx = useContext(AppCTX) as ctxValue;
+  const {getGroup, getUser} = ctx;
 
   return (
     <div
