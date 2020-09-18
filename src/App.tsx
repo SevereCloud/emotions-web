@@ -1,11 +1,19 @@
 import React from 'react';
-import { Panel, Root, View } from '@vkontakte/vkui';
+import {
+  Panel,
+  Root,
+  View,
+  PanelHeader,
+} from '@vkontakte/vkui';
 import type {
   AppearanceSchemeType,
   UpdateConfigData,
 } from '@vkontakte/vk-bridge';
 import type { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
 import { Main } from './panels/Main';
+import { Newsfeed } from './panels/Newsfeed';
+import './components/Post/Post.css';
+import './components/PostBar/PostBar.css';
 
 interface AppState {
   scheme: AppearanceSchemeType;
@@ -29,7 +37,7 @@ export class App extends React.Component<AppProps, AppState> {
     this.state = {
       scheme: 'bright_light',
       activeView: 'main',
-      activePanel: { main: 'main' },
+      activePanel: { newsfeed: 'newsfeed' },
       popout: null,
       history: [{ view: 'main', panel: 'main' }],
 
@@ -106,8 +114,11 @@ export class App extends React.Component<AppProps, AppState> {
 
     return (
       <Root activeView={activeView}>
-        <View id="main" activePanel={activePanel['main']}>
-          <Panel id="main">
+        <View id="main" activePanel={activePanel['newsfeed']}>
+          <Panel id="newsfeed">
+            <Newsfeed goBack={() => { }} />
+          </Panel>
+          <Panel id="map">
             <Main
               setPanel={this.setPanel}
               scheme={scheme}
@@ -119,7 +130,6 @@ export class App extends React.Component<AppProps, AppState> {
               }}
             />
           </Panel>
-          <Panel id="newsfeed"></Panel>
         </View>
       </Root>
     );

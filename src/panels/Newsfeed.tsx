@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View,
   Panel,
+  Group,
   PanelHeader,
   Button,
   PanelHeaderBack,
@@ -33,41 +34,40 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
         >
           Новости
         </PanelHeader>
-        <Post
-          author={{ id: 100, name: 'ВКонтакте', photo_100: '' }}
-          date="час назад"
-          likes={65}
-          comments={65}
-          reposts={4}
-          views="7,2К"
-          style={{ marginTop: -100 }}
-        >
-          <div
-            style={{
-              height: 80,
-              width: '100%',
-              backgroundColor: 'var(--placeholder_icon_background)',
-            }}
-          />
-        </Post>
-        <CardDivider />
-        <CardDivider />
-        <Post
-          author={{ id: 100, name: 'ВКонтакте', photo_100: '' }}
-          date="час назад"
-          likes={65}
-          comments={65}
-          reposts={4}
-          views="7,2К"
-        >
-          <div
-            style={{
-              height: 500,
-              width: '100%',
-              backgroundColor: 'var(--placeholder_icon_background)',
-            }}
-          />
-        </Post>
+        <div style={{ backgroundColor: '#efefef', paddingTop: 1, paddingBottom: 1}} >
+          <Post
+            author={{ id: 100, name: 'ВКонтакте', photo_100: '' }}
+            date="час назад"
+            likes={65}
+            comments={65}
+            reposts={4}
+            views="7,2К"
+          >
+            <div
+              style={{
+                height: 320,
+                width: '100%',
+                backgroundColor: 'var(--placeholder_icon_background)',
+              }}
+            />
+          </Post>
+          <Post
+            author={{ id: 100, name: 'ВКонтакте', photo_100: '' }}
+            date="час назад"
+            likes={65}
+            comments={65}
+            reposts={4}
+            views="7,2К"
+          >
+            <div
+              style={{
+                height: 320,
+                width: '100%',
+                backgroundColor: 'var(--placeholder_icon_background)',
+              }}
+            />
+          </Post>
+        </div>
       </>
     );
   }
