@@ -1,8 +1,7 @@
 import React from '../../web_modules/react.js';
 import { Avatar, Div, FixedLayout, Snackbar } from '../../web_modules/@vkontakte/vkui.js';
 import MapComponent from '../components/Map/Map.js';
-import { Icon16Clear } from '../../web_modules/@vkontakte/icons.js'; // interface MainState {}
-
+import { Icon16Clear } from '../../web_modules/@vkontakte/icons.js';
 export class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -48,7 +47,9 @@ export class Main extends React.Component {
       vkAPI,
       center,
       zoom,
-      updateMap
+      updateMap,
+      themePoints,
+      themeWalls
     } = this.props;
     const {
       snackbar
@@ -59,7 +60,9 @@ export class Main extends React.Component {
       zoom: zoom,
       scheme: scheme,
       updateMap: updateMap,
-      error: (a, b) => this.error(a, b)
+      error: (a, b) => this.error(a, b),
+      themePoints: themePoints,
+      themeWalls: themeWalls
     }), /*#__PURE__*/React.createElement(FixedLayout, {
       filled: true,
       vertical: "bottom"

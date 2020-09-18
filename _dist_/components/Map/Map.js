@@ -7,11 +7,11 @@ import { Icon28LocationOutline } from '../../../web_modules/@vkontakte/icons.js'
 import ButtonFloating from '../ButtonFloating/ButtonFloating.js';
 import Layer from './layer.js';
 import Feature from './feature.js';
-import { isLaunchFromVK } from '../../lib.js';
+import { getCord, isLaunchFromVK } from '../../lib.js';
+
 /**
  * Токен для mapbox
  */
-
 const TOKEN = 'pk.eyJ1Ijoic2V2ZXJlY2xvdWQiLCJhIjoiY2lxdW5sc2tjMDA1OWh3bml2c3dlMWZ2eSJ9.HVh-skFXU-Ck2fY1aRmNew';
 /**
  * Список лейблов, для которых необходимо установить язык.
@@ -343,7 +343,9 @@ export class MapComponent extends React.Component {
 
   render() {
     const {
-      scheme
+      scheme,
+      themePoints,
+      themeWalls
     } = this.props;
     const {
       ready,
@@ -373,7 +375,40 @@ export class MapComponent extends React.Component {
       }
     }, userCenter && /*#__PURE__*/React.createElement(Feature, {
       coordinates: userCenter
-    }))), ready && /*#__PURE__*/React.createElement(ButtonFloating, {
+    })), /*#__PURE__*/React.createElement(Layer, {
+      map: map,
+      id: "theme",
+      type: "circle",
+      paint: {
+        'circle-radius': 4,
+        'circle-color': accent(scheme),
+        'circle-stroke-width': 3,
+        'circle-stroke-color': background_content(scheme)
+      }
+    }, themePoints.map(themePoint =>
+    /*#__PURE__*/
+    // eslint-disable-next-line react/jsx-key
+    React.createElement(Feature, {
+      coordinates: themePoint.center
+    }))), Object.keys(themeWalls).map(key =>
+    /*#__PURE__*/
+    // eslint-disable-next-line react/jsx-key
+    React.createElement(Layer, {
+      map: map,
+      id: `post${key}`,
+      type: "circle",
+      paint: {
+        'circle-radius': 1,
+        'circle-color': background_content(scheme),
+        'circle-stroke-width': 1,
+        'circle-stroke-color': accent(scheme)
+      }
+    }, themeWalls[key].map(wall =>
+    /*#__PURE__*/
+    // eslint-disable-next-line react/jsx-key
+    React.createElement(Feature, {
+      coordinates: getCord(wall.geo.coordinates)
+    }))))), ready && /*#__PURE__*/React.createElement(ButtonFloating, {
       style: {
         position: 'absolute',
         right: 8,
