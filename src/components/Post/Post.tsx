@@ -8,14 +8,14 @@ import {
   Tappable,
 } from '@vkontakte/vkui';
 import type { HasRootRef } from '@vkontakte/vkui/dist/types';
-import type {Wall} from '../../api';
+import type { Wall } from '../../api';
 import type { Author, ctxValue } from '../../types';
 import AppCTX from '../../appContext';
 import PostBar from '../PostBar/PostBar';
 
 export interface PostProps
   extends HTMLAttributes<HTMLElement>,
-    HasRootRef<HTMLElement> {
+  HasRootRef<HTMLElement> {
   author: Author;
   date: string;
 
@@ -34,12 +34,11 @@ const Post: FC<PostProps> = ({
   comments,
   reposts,
   views,
-  children,
   ...restProps
 }) => {
   const platform = usePlatform();
   const ctx = useContext(AppCTX) as ctxValue;
-  const {getGroup, getUser} = ctx;
+  const { getGroup, getUser } = ctx;
 
   return (
     <div
@@ -55,7 +54,15 @@ const Post: FC<PostProps> = ({
           {author.name}
         </SimpleCell>
       </div>
-      <div className="Post__content">{children}</div>
+      <div className="Post__content">
+        <div
+          style={{
+            height: 150,
+            width: '100%',
+            backgroundColor: 'var(--placeholder_icon_background)',
+          }}
+        />
+      </div>
       <PostBar
         likes={likes}
         comments={comments}

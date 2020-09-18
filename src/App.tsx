@@ -22,6 +22,7 @@ import './components/PostBar/PostBar.css';
 import { Score, Theme, ThemePoint, themeSearch, ThemeWalls } from './types';
 import type { ApiNewsfeedSearchResponse, Group, Profile } from './api';
 import { distance, getAppID, getCord } from './lib';
+import mockData from './mockData';
 
 interface AppState {
   scheme: AppearanceSchemeType;
@@ -69,17 +70,8 @@ export class App extends React.Component<AppProps, AppState> {
       center: [30.3, 59.9],
       zoom: 10,
 
-      themeWalls: {
-        Осень: [],
-        Фильмы: [],
-        Работа: [],
-        Карантин: [],
-        Игры: [],
-        Искусство: [],
-        Юмор: [],
-        Фотографии: [],
-      },
-      selectedTheme: 'Фотографии',
+      themeWalls: mockData.themeWalls,
+      selectedTheme: 'Осень',
       themePoints: [],
 
       prevLoadCenter: [30.3, 59.9],

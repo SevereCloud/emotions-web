@@ -30,6 +30,7 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
 
   render(): JSX.Element {
     const { setPanel, walls } = this.props;
+    console.log('walls', walls)
     // const {  } = this.state;
     return (
       <>
@@ -39,7 +40,11 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
         >
           Новости
         </PanelHeader>
-        <div style={{ backgroundColor: '#efefef', paddingTop: 1, paddingBottom: 1 }} >
+        <div style={{
+          backgroundColor: '#efefef',
+          paddingTop: 1,
+          paddingBottom: 1,
+        }} >
           {walls.map(wall => (
             <Post
               author={{ id: 100, name: 'ВКонтакте', photo_100: '' }}
