@@ -9,8 +9,19 @@ import Layer from './layer';
 import Feature from './feature';
 import { getCord, isLaunchFromVK } from '../../lib';
 import type { Wall } from '../../api';
-import type { ThemePoint, ThemeWalls } from '../../types';
+import { themeImage, ThemePoint, ThemeWalls } from '../../types';
+import Image from './image';
 
+import art from '../../markers/art.png';
+import auto from '../../markers/auto.png';
+import fall from '../../markers/fall.png';
+import film from '../../markers/film.png';
+import game from '../../markers/game.png';
+import it from '../../markers/it.png';
+import music from '../../markers/music.png';
+import quarantine from '../../markers/quarantine.png';
+import work from '../../markers/work.png';
+import comedy from '../../markers/comedy.png';
 /**
  * Токен для mapbox
  */
@@ -49,16 +60,16 @@ const style = (scheme: AppearanceSchemeType) =>
  *
  * @param scheme цветовая схема
  */
-// const textColor = (scheme: AppearanceSchemeType) =>
-//   scheme === 'space_gray' ? 'hsl(78, 55%, 100%)' : 'hsl(31, 50%, 15%)';
+const textColor = (scheme: AppearanceSchemeType) =>
+  scheme === 'space_gray' ? 'hsl(78, 55%, 100%)' : 'hsl(31, 50%, 15%)';
 
 /**
  * Возвращает цвет обводки текста
  *
  * @param scheme цветовая схема
  */
-// const textHaloColor = (scheme: AppearanceSchemeType) =>
-//   scheme === 'space_gray' ? 'hsl(31, 50%, 15%)' : 'hsl(78, 55%, 100%)';
+const textHaloColor = (scheme: AppearanceSchemeType) =>
+  scheme === 'space_gray' ? 'hsl(31, 50%, 15%)' : 'hsl(78, 55%, 100%)';
 
 /**
  * Возвращает accent цвет
@@ -408,6 +419,17 @@ export class MapComponent extends React.Component<MapProps, MapState> {
 
         {ready && map && (
           <>
+            <Image map={map} id="image-art" url={art} />
+            <Image map={map} id="image-auto" url={auto} />
+            <Image map={map} id="image-fall" url={fall} />
+            <Image map={map} id="image-film" url={film} />
+            <Image map={map} id="image-game" url={game} />
+            <Image map={map} id="image-it" url={it} />
+            <Image map={map} id="image-music" url={music} />
+            <Image map={map} id="image-quarantine" url={quarantine} />
+            <Image map={map} id="image-work" url={work} />
+            <Image map={map} id="image-comedy" url={comedy} />
+
             {/* Точка пользователя */}
             <Layer
               map={map}
@@ -428,10 +450,8 @@ export class MapComponent extends React.Component<MapProps, MapState> {
               id="theme"
               type="circle"
               paint={{
-                'circle-radius': 4,
-                'circle-color': accent(scheme),
-                'circle-stroke-width': 3,
-                'circle-stroke-color': background_content(scheme),
+                'circle-radius': 30,
+                'circle-color': background_content(scheme),
               }}
             >
               {themePoints.map((themePoint) => (
@@ -439,8 +459,28 @@ export class MapComponent extends React.Component<MapProps, MapState> {
                 <Feature coordinates={themePoint.center} />
               ))}
             </Layer>
+            <Layer
+              map={map}
+              id="theme-symbol"
+              type="symbol"
+              layout={{
+                'icon-image': ['get', 'image'],
+                'icon-size': ['get', 'size'],
+              }}
+            >
+              {themePoints.map((themePoint) => (
+                // eslint-disable-next-line react/jsx-key
+                <Feature
+                  properties={{
+                    image: themeImage['Игры'],
+                    size: 0.4,
+                  }}
+                  coordinates={themePoint.center}
+                />
+              ))}
+            </Layer>
 
-            {/* Тематические точки */}
+            {/* Точки постов */}
             {Object.keys(themeWalls).map((key) => (
               // eslint-disable-next-line react/jsx-key
               <Layer
