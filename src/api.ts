@@ -15,8 +15,8 @@ export interface Wall {
   post_type: string;
   text: string;
   marked_as_ads?: number;
-  attachments: WallAttachment[];
-  geo: WallGeo;
+  attachments?: WallAttachment[];
+  geo?: WallGeo;
   comments: WallComments;
   likes: WallLikes;
   reposts: WallReposts;

@@ -1,4 +1,4 @@
-import type { Wall } from './api';
+import type { Wall, Profile, Group } from './api';
 
 export interface Author {
   id: number;
@@ -50,3 +50,13 @@ export interface ThemePoint {
   center: [number, number];
   score: Score;
 }
+
+export type ctxValue = {
+  getUser: (userId: number) => Profile;
+  getGroup: (groupId: number) => Group;
+};
+
+// TODO: грузим все нужные новости
+// TODO: от центра ставим 5 точек (в центре и по углам)
+// TODO: считаем кол-во новостей по точкам
+// TODO: на месте точек рисуем три самых крупных темы

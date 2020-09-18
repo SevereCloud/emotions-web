@@ -1,19 +1,33 @@
 import React from 'react';
-import { Panel, Root, View } from '@vkontakte/vkui';
+import {
+  Panel,
+  Root,
+  View,
+  PanelHeader,
+} from '@vkontakte/vkui';
 import type {
   AppearanceSchemeType,
   UpdateConfigData,
 } from '@vkontakte/vk-bridge';
 import type { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
+
+import AppCTX from './appContext';
+
 import { Main } from './panels/Main';
+import { Newsfeed } from './panels/Newsfeed';
+
+import './components/Post/Post.css';
+import './components/PostBar/PostBar.css';
+
 import { Score, Theme, ThemePoint, themeSearch, ThemeWalls } from './types';
 import type { ApiNewsfeedSearchResponse, Group, Profile } from './api';
 import { distance, getAppID, getCord } from './lib';
+import mockData from './mockData';
 
 interface AppState {
   scheme: AppearanceSchemeType;
   activeView: string;
-  activePanel: { [id: string]: string };
+  activePanel: string;
   popout?: React.ReactNode;
   history: Array<{ view: string; panel: string }>;
 
@@ -24,7 +38,7 @@ interface AppState {
    * Все посты по темам
    */
   themeWalls: ThemeWalls;
-
+  selectedTheme: Theme;
   /**
    * Количество постов в определенных точках
    */
@@ -49,23 +63,15 @@ export class App extends React.Component<AppProps, AppState> {
     this.state = {
       scheme: 'bright_light',
       activeView: 'main',
-      activePanel: { main: 'main' },
+      activePanel: 'newsfeed',
       popout: null,
-      history: [{ view: 'main', panel: 'main' }],
+      history: [{ view: 'main', panel: 'map' }],
 
       center: [30.3, 59.9],
       zoom: 10,
 
-      themeWalls: {
-        Осень: [],
-        Фильмы: [],
-        Работа: [],
-        Карантин: [],
-        Игры: [],
-        Искусство: [],
-        Юмор: [],
-        Фотографии: [],
-      },
+      themeWalls: mockData.themeWalls,
+      selectedTheme: 'Осень',
       themePoints: [],
 
       prevLoadCenter: [30.3, 59.9],
@@ -104,8 +110,7 @@ export class App extends React.Component<AppProps, AppState> {
   }
 
   setView(view: string, name = 'main'): void {
-    const panel = { ...this.state.activePanel };
-    panel[view] = name;
+    const panel = this.state.activePanel;
 
     const newHistory = [...this.state.history, { view: view, panel: name }];
 
@@ -116,13 +121,12 @@ export class App extends React.Component<AppProps, AppState> {
     });
   }
 
-  setPanel(name: string): void {
-    const panel = { ...this.state.activePanel };
-    panel[this.state.activeView] = name;
+  setPanel(panel: string): void {
+    console.log('trigger set panel')
 
     const newHistory = [
       ...this.state.history,
-      { view: this.state.activeView, panel: name },
+      { view: this.state.activeView, panel },
     ];
 
     this.setState({ activePanel: panel, history: newHistory });
@@ -134,17 +138,18 @@ export class App extends React.Component<AppProps, AppState> {
 
   goBack(): void {
     const newHistory = [...this.state.history];
-    newHistory.pop();
-    const { view, panel } = newHistory[newHistory.length - 1];
+    if (newHistory.length > 1) {
+      newHistory.pop();
+      const { view, panel } = newHistory[newHistory.length - 1];
 
-    const p = { ...this.state.activePanel };
-    p[view] = panel;
+      const p = this.state.activePanel;
 
-    this.setState({
-      activeView: view,
-      activePanel: p,
-      history: newHistory,
-    });
+      this.setState({
+        activeView: view,
+        activePanel: p,
+        history: newHistory,
+      });
+    }
   }
 
   /**
@@ -333,25 +338,38 @@ export class App extends React.Component<AppProps, AppState> {
       themePoints,
       themeWalls,
     } = this.state;
-
+    console.log(themeWalls)
     return (
-      <Root activeView={activeView}>
-        <View id="main" activePanel={activePanel['main']}>
-          <Panel id="main">
-            <Main
-              setPanel={this.setPanel}
-              scheme={scheme}
-              vkAPI={vkAPI}
-              center={center}
-              zoom={zoom}
-              updateMap={(center, zoom) => this.updateMap(center, zoom)}
-              themePoints={themePoints}
-              themeWalls={themeWalls}
-            />
-          </Panel>
-          <Panel id="newsfeed"></Panel>
-        </View>
-      </Root>
+      <AppCTX.Provider
+        value={{
+          getUser: this.getUser,
+          getGroup: this.getGroup,
+        }}
+      >
+        <Root activeView={activeView}>
+          <View id="main" activePanel={activePanel}>
+            <Panel id="newsfeed">
+              <Newsfeed
+                setPanel={this.setPanel}
+                theme={this.state.selectedTheme}
+                walls={this.state.themeWalls[this.state.selectedTheme]}
+              />
+            </Panel>
+            <Panel id="map">
+              <Main
+                setPanel={this.setPanel}
+                scheme={scheme}
+                vkAPI={vkAPI}
+                center={center}
+                zoom={zoom}
+                updateMap={(center, zoom) => this.updateMap(center, zoom)}
+                themePoints={themePoints}
+                themeWalls={themeWalls}
+              />
+            </Panel>
+          </View>
+        </Root>
+      </AppCTX.Provider>
     );
   }
 }

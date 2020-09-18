@@ -2,17 +2,23 @@ import React from 'react';
 import {
   View,
   Panel,
+  Group,
   PanelHeader,
   Button,
   PanelHeaderBack,
 } from '@vkontakte/vkui';
+
+import type { Theme } from '../types';
+import { Wall } from '../api';
 import Post from '../components/Post/Post';
-import CardDivider from '../components/CardDivider/CardDivider';
+
 
 // interface NewsfeedState {}
 
 export interface NewsfeedProps {
-  goBack: () => void;
+  setPanel: (panel: string) => void;
+  theme: Theme;
+  walls: Wall[];
 }
 
 export class Newsfeed extends React.Component<NewsfeedProps> {
@@ -23,51 +29,33 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
   }
 
   render(): JSX.Element {
-    const { goBack } = this.props;
+    const { setPanel, walls } = this.props;
+    console.log('walls', walls)
     // const {  } = this.state;
     return (
       <>
         <PanelHeader
           separator={false}
-          left={<PanelHeaderBack onClick={() => goBack()} />}
+          left={<PanelHeaderBack onClick={() => setPanel('map')} />}
         >
           Новости
         </PanelHeader>
-        <Post
-          author={{ id: 100, name: 'ВКонтакте', photo_100: '' }}
-          date="час назад"
-          likes={65}
-          comments={65}
-          reposts={4}
-          views="7,2К"
-          style={{ marginTop: -100 }}
-        >
-          <div
-            style={{
-              height: 80,
-              width: '100%',
-              backgroundColor: 'var(--placeholder_icon_background)',
-            }}
-          />
-        </Post>
-        <CardDivider />
-        <CardDivider />
-        <Post
-          author={{ id: 100, name: 'ВКонтакте', photo_100: '' }}
-          date="час назад"
-          likes={65}
-          comments={65}
-          reposts={4}
-          views="7,2К"
-        >
-          <div
-            style={{
-              height: 500,
-              width: '100%',
-              backgroundColor: 'var(--placeholder_icon_background)',
-            }}
-          />
-        </Post>
+        <div style={{
+          backgroundColor: '#efefef',
+          paddingTop: 1,
+          paddingBottom: 1,
+        }} >
+          {walls.map(wall => (
+            <Post
+              date="час назад"
+              likes={65}
+              comments={65}
+              reposts={4}
+              views="7,2К"
+              wall={wall}
+            />
+          ))}
+        </div>
       </>
     );
   }
