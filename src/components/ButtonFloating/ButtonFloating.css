@@ -1,0 +1,48 @@
+.ButtonFloating {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: var(--content_tint_background);
+  border-radius: 50%;
+  z-index: 3;
+  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.08), 0 0 2px 0 rgba(0, 0, 0, 0.08);
+}
+
+.ButtonFloating__in {
+  position: relative;
+  border-radius: inherit;
+}
+
+.ButtonFloating .ButtonFloating__in .Icon {
+  color: var(--accent);
+}
+
+/**
+    * iOS
+   */
+
+.ButtonFloating--ios.ButtonFloating--sz-d {
+  width: 56px;
+  height: 56px;
+}
+
+.ButtonFloating--ios.ButtonFloating--sz-m {
+  width: 40px;
+  height: 40px;
+}
+
+/**
+   * Android
+   */
+
+.ButtonFloating--android.ButtonFloating--sz-d {
+  width: 56px;
+  height: 56px;
+}
+
+.ButtonFloating--android.ButtonFloating--sz-m {
+  width: 40px;
+  height: 40px;
+}

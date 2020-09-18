@@ -13,6 +13,9 @@ interface AppState {
   activePanel: { [id: string]: string };
   popout?: React.ReactNode;
   history: Array<{ view: string; panel: string }>;
+
+  center: [number, number];
+  zoom: number;
 }
 
 export interface AppProps {
@@ -29,6 +32,9 @@ export class App extends React.Component<AppProps, AppState> {
       activePanel: { main: 'main' },
       popout: null,
       history: [{ view: 'main', panel: 'main' }],
+
+      center: [45, 60],
+      zoom: 4,
     };
 
     this.setView = this.setView.bind(this);
@@ -95,13 +101,21 @@ export class App extends React.Component<AppProps, AppState> {
   }
 
   render(): JSX.Element {
-    const { activeView, activePanel } = this.state;
+    const { vkAPI } = this.props;
+    const { activeView, activePanel, scheme, center, zoom } = this.state;
 
     return (
       <Root activeView={activeView}>
         <View id="main" activePanel={activePanel['main']}>
           <Panel id="main">
-            <Main setPanel={this.setPanel} />
+            <Main
+              setPanel={this.setPanel}
+              scheme={scheme}
+              vkAPI={vkAPI}
+              center={center}
+              zoom={zoom}
+              updateMap={(center,zoom) => {this.setState({zoom,center})}}
+            />
           </Panel>
           <Panel id="newsfeed"></Panel>
         </View>
