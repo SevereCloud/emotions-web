@@ -28,7 +28,7 @@ export interface Props {
 
 export class ProjectedLayer extends React.Component<Props, OverlayParams> {
   private container: HTMLElement | undefined = undefined;
-  private prevent: boolean = false;
+  private prevent = false;
 
   public static defaultProps = {
     offset: 0,

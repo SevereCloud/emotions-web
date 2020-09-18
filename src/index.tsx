@@ -5,7 +5,7 @@ import { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
 import bridge from '@vkontakte/vk-bridge';
 
 import '@vkontakte/vkui/dist/vkui.css';
-import './components/ButtonFloating/ButtonFloating.css'
+import './components/ButtonFloating/ButtonFloating.css';
 
 ReactDOM.render(
   <React.StrictMode>

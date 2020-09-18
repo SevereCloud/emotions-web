@@ -1,14 +1,13 @@
 import React from 'react';
-import {
-  Snackbar,
-  Avatar,
-  Spinner,
-} from '@vkontakte/vkui';
+import { Spinner } from '@vkontakte/vkui';
 import type { AppearanceSchemeType, ErrorData } from '@vkontakte/vk-bridge';
 import MapboxGl from 'mapbox-gl';
 import type { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
-import { Icon16Clear, Icon28LocationOutline } from '@vkontakte/icons';
+import { Icon28LocationOutline } from '@vkontakte/icons';
 import ButtonFloating from '../ButtonFloating/ButtonFloating';
+import Layer from './layer';
+import Feature from './feature';
+import { isLaunchFromVK } from '../../lib';
 
 /**
  * Токен для mapbox
@@ -43,9 +42,37 @@ const style = (scheme: AppearanceSchemeType) =>
     ? 'mapbox://styles/mapbox/dark-v10?optimize=true'
     : 'mapbox://styles/mapbox/light-v10?optimize=true';
 
+/**
+ * Возвращает цвет текста
+ *
+ * @param scheme цветовая схема
+ */
+// const textColor = (scheme: AppearanceSchemeType) =>
+//   scheme === 'space_gray' ? 'hsl(78, 55%, 100%)' : 'hsl(31, 50%, 15%)';
 
+/**
+ * Возвращает цвет обводки текста
+ *
+ * @param scheme цветовая схема
+ */
+// const textHaloColor = (scheme: AppearanceSchemeType) =>
+//   scheme === 'space_gray' ? 'hsl(31, 50%, 15%)' : 'hsl(78, 55%, 100%)';
 
+/**
+ * Возвращает accent цвет
+ *
+ * @param scheme цветовая схема
+ */
+const accent = (scheme: AppearanceSchemeType) =>
+  scheme === 'space_gray' ? '#71aaeb' : '#3f8ae0';
 
+/**
+ * Возвращает background_content цвет
+ *
+ * @param scheme цветовая схема
+ */
+const background_content = (scheme: AppearanceSchemeType) =>
+  scheme === 'space_gray' ? '#19191a' : '#ffffff';
 
 export interface MapProps {
   vkAPI: VKMiniAppAPI;
@@ -57,6 +84,8 @@ export interface MapProps {
   center: [number, number];
   zoom: number;
   movingMethod?: 'jumpTo' | 'easeTo' | 'flyTo';
+
+  error: (msg: string, duration?: number) => void;
 }
 
 interface MapState {
@@ -66,8 +95,6 @@ interface MapState {
 
   isGetGeodata: boolean;
   isChosePlace: boolean;
-
-  snackbar: JSX.Element | null;
 
   center: [number, number];
   zoom: number;
@@ -81,7 +108,6 @@ export class MapComponent extends React.Component<MapProps, MapState> {
       ready: false,
       isGetGeodata: false,
       isChosePlace: false,
-      snackbar: null,
       center: props.center,
       zoom: props.zoom,
     };
@@ -94,8 +120,13 @@ export class MapComponent extends React.Component<MapProps, MapState> {
 
   public componentDidMount() {
     try {
+      if (!this.mapContainer) {
+        this.error('Не удалось загрузить карту', 15e3);
+        return;
+      }
+
       const map = new MapboxGl.Map({
-        container: this.mapContainer!,
+        container: this.mapContainer,
         style: style(this.props.scheme),
         center: this.props.center,
         zoom: this.props.zoom,
@@ -257,46 +288,89 @@ export class MapComponent extends React.Component<MapProps, MapState> {
       zoom = 15;
     }
 
-    // Получаем геопозицию пользователя через VK Bridge
-    this.props.vkAPI
-      .getGeodata()
-      .then(({ lat, long, isAvailable }) => {
-        if (isAvailable) {
-          this.state.map?.flyTo({
-            center: [long, lat],
-            zoom: zoom,
-          });
+    const set = (lat: number, long: number) => {
+      this.state.map?.flyTo({
+        center: [long, lat],
+        zoom: zoom,
+      });
 
+      this.setState({
+        userCenter: [long, lat],
+      });
+    };
+
+    // Получаем геопозицию пользователя через VK Bridge
+    if (isLaunchFromVK()) {
+      this.props.vkAPI
+        .getGeodata()
+        .then(({ lat, long, isAvailable }) => {
+          if (isAvailable) {
+            set(lat, long);
+          } else {
+            this.error('Местоположение не доступно. Включите геолокацию.');
+          }
+        })
+        .catch((e: ErrorData) => {
+          console.log(e);
+          switch (e.error_type) {
+            case 'client_error':
+              switch (e.error_data.error_code) {
+                case 4:
+                  this.error('Требуется доступ к геопозиции');
+                  break;
+                default:
+                  break;
+              }
+              break;
+            default:
+              this.error('Неизвестная ошибка...');
+              break;
+          }
+        })
+        .finally(() => {
+          // Отключаем спиннер
           this.setState({
-            userCenter: [long, lat],
+            isGetGeodata: false,
           });
-        } else {
-          this.error('Местоположение не доступно. Включите геолокацию.');
-        }
-      })
-      .catch((e: ErrorData) => {
-        console.log(e);
-        switch (e.error_type) {
-          case 'client_error':
-            switch (e.error_data.error_code) {
-              case 4:
-                this.error('Требуется доступ к геопозиции');
-                break;
-              default:
-                break;
-            }
-            break;
-          default:
-            this.error('Неизвестная ошибка...');
-            break;
-        }
-      })
-      .finally(() => {
-        // Отключаем спиннер
+        });
+    } else {
+      if (!navigator.geolocation) {
+        this.error('Браузер не поддерживает геолокацию');
         this.setState({
           isGetGeodata: false,
         });
-      });
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          set(position.coords.latitude, position.coords.longitude);
+          this.setState({
+            isGetGeodata: false,
+          });
+        },
+        (error) => {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              this.error('Требуется доступ к геопозиции');
+              break;
+            case error.POSITION_UNAVAILABLE:
+              this.error('Геопозиция недоступна');
+              break;
+            case error.TIMEOUT:
+              this.error('Таймаут получения геопозиции.');
+              break;
+
+            default:
+              this.error(error.message);
+              break;
+          }
+          console.log(error);
+          this.setState({
+            isGetGeodata: false,
+          });
+        },
+      );
+    }
   }
 
   /**
@@ -305,38 +379,18 @@ export class MapComponent extends React.Component<MapProps, MapState> {
    * @param msg текст ошибки
    * @param duration время показа ошибки в ms
    */
-  error(msg: string, duration: number = 4e3) {
-    if (this.state.snackbar) return;
-    this.setState({
-      snackbar: (
-        <Snackbar
-          layout="vertical"
-          duration={duration}
-          onClose={() => this.setState({ snackbar: null })}
-          before={
-            <Avatar size={24} style={{ backgroundColor: 'var(--dynamic_red)' }}>
-              {' '}
-              <Icon16Clear fill="#fff" width={14} height={14} />
-            </Avatar>
-          }
-        >
-          {msg}
-        </Snackbar>
-      ),
-    });
+  error(msg: string, duration = 4e3) {
+    this.props.error(msg, duration);
   }
 
   render(): JSX.Element {
-    const {
-      ready,
-      isGetGeodata,
-      snackbar,
-    } = this.state;
+    const { scheme } = this.props;
+    const { ready, isGetGeodata, map, userCenter } = this.state;
 
     return (
       <>
         <div
-          ref={(el) => (this.mapContainer = el!)}
+          ref={(el) => el && (this.mapContainer = el)}
           className="mapContainer"
           style={{
             position: 'absolute',
@@ -346,6 +400,25 @@ export class MapComponent extends React.Component<MapProps, MapState> {
             bottom: 48,
           }}
         />
+
+        {ready && map && (
+          <>
+            {/* Точка пользователя */}
+            <Layer
+              map={map}
+              id="user"
+              type="circle"
+              paint={{
+                'circle-radius': 4,
+                'circle-color': accent(scheme),
+                'circle-stroke-width': 3,
+                'circle-stroke-color': background_content(scheme),
+              }}
+            >
+              {userCenter && <Feature coordinates={userCenter} />}
+            </Layer>
+          </>
+        )}
 
         {ready && (
           <ButtonFloating
@@ -362,8 +435,6 @@ export class MapComponent extends React.Component<MapProps, MapState> {
             )) || <Spinner size="small" />}
           </ButtonFloating>
         )}
-
-        {snackbar}
       </>
     );
   }

@@ -1,5 +1,10 @@
 import React, { HTMLAttributes, FC } from 'react';
-import { usePlatform, Tappable, classNames, getClassName } from '@vkontakte/vkui';
+import {
+  usePlatform,
+  Tappable,
+  classNames,
+  getClassName,
+} from '@vkontakte/vkui';
 import './ButtonFloating.css';
 import type { HasRootRef } from '@vkontakte/vkui/dist/types';
 

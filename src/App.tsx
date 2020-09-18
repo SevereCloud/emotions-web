@@ -114,7 +114,9 @@ export class App extends React.Component<AppProps, AppState> {
               vkAPI={vkAPI}
               center={center}
               zoom={zoom}
-              updateMap={(center,zoom) => {this.setState({zoom,center})}}
+              updateMap={(center, zoom) => {
+                this.setState({ zoom, center });
+              }}
             />
           </Panel>
           <Panel id="newsfeed"></Panel>

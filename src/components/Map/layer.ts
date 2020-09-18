@@ -106,7 +106,7 @@ const eventToHandler: EventToHandlersType = {
 
 export default class Layer extends React.Component<Props> {
   public static defaultProps = {
-    type: 'symbol' as 'symbol',
+    type: 'symbol' as const,
     layout: {},
     paint: {},
   };
