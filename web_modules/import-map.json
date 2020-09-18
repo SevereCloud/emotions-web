@@ -5,6 +5,8 @@
     "@vkontakte/vk-mini-apps-api": "./@vkontakte/vk-mini-apps-api.js",
     "@vkontakte/vkui": "./@vkontakte/vkui.js",
     "@vkontakte/vkui/dist/vkui.css": "./@vkontakte/vkui/dist/vkui.css",
+    "deep-equal": "./deep-equal.js",
+    "mapbox-gl": "./mapbox-gl.js",
     "react": "./react.js",
     "react-dom": "./react-dom.js"
   }

@@ -1,5 +1,6 @@
-import { c as createCommonjsModule, r as react, g as getDefaultExportFromCjs } from '../common/index-2cd4dd6b.js';
-import { b as browserSprite, a as browserSymbol, e as es6ObjectAssign } from '../common/browser-sprite-329c1bbb.js';
+import { c as createCommonjsModule, g as getDefaultExportFromCjs } from '../common/_commonjsHelpers-7b2291da.js';
+import { r as react } from '../common/index-e3dbc5f6.js';
+import { b as browserSprite, a as browserSymbol, e as es6ObjectAssign } from '../common/browser-sprite-a7c324af.js';
 import { b as bridge } from '../common/index.es-112d111e.js';
 
 var canUseDOM = !!(typeof window !== 'undefined' && window.document &&
@@ -866,6 +867,19 @@ function getSupportedEvents() {
   }
 
   return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
+}
+/*
+ * Рассчитывает "сопротивление" для iOS тач-событий
+ */
+
+
+function rubber(offset, dimension, resistanceRate, isAndroid) {
+  if (isAndroid || offset < 0) {
+    return offset;
+  }
+
+  var offsettedResistance = offset * resistanceRate;
+  return offsettedResistance * dimension / (offsettedResistance + dimension);
 }
 
 // Является ли переданное значение числовым
@@ -2543,6 +2557,506 @@ SvgIcon.defaultProps = {
 
 });
 
+var spinner = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 24 24';
+var id = 'spinner_24';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="spinner_24"><path d="M12 24a1.25 1.25 0 110-2.5A9.5 9.5 0 102.5 12c0 1.1.187 2.175.548 3.188a1.25 1.25 0 01-2.355.84A11.981 11.981 0 010 12C0 5.373 5.373 0 12 0s12 5.373 12 12-5.373 12-12 12z" fill="currentColor" fill-rule="nonzero" /></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon24Spinner = function Icon24Spinner(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 24,
+    height: !isNaN(props.height) ? +props.height : 24
+  }));
+};
+
+Icon24Spinner.mountIcon = mountIcon;
+var _default = Icon24Spinner;
+exports.default = _default;
+
+});
+
+var Spinner24 = /*@__PURE__*/getDefaultExportFromCjs(spinner);
+
+var spinner$1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 32 32';
+var id = 'spinner_32';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="spinner_32"><path d="M16 32a1.5 1.5 0 010-3c7.18 0 13-5.82 13-13S23.18 3 16 3 3 8.82 3 16c0 1.557.273 3.074.8 4.502A1.5 1.5 0 11.986 21.54 15.97 15.97 0 010 16C0 7.163 7.163 0 16 0s16 7.163 16 16-7.163 16-16 16z" fill="currentColor" fill-rule="nonzero" /></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon32Spinner = function Icon32Spinner(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 32,
+    height: !isNaN(props.height) ? +props.height : 32
+  }));
+};
+
+Icon32Spinner.mountIcon = mountIcon;
+var _default = Icon32Spinner;
+exports.default = _default;
+
+});
+
+var Spinner32 = /*@__PURE__*/getDefaultExportFromCjs(spinner$1);
+
+var spinner$2 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 44 44';
+var id = 'spinner_44';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" id="spinner_44"><path d="M22 44a1.5 1.5 0 010-3c10.493 0 19-8.507 19-19S32.493 3 22 3 3 11.507 3 22c0 2.208.376 4.363 1.103 6.397a1.5 1.5 0 11-2.825 1.01A21.964 21.964 0 010 22C0 9.85 9.85 0 22 0s22 9.85 22 22-9.85 22-22 22z" fill="currentColor" fill-rule="nonzero" /></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon44Spinner = function Icon44Spinner(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 44,
+    height: !isNaN(props.height) ? +props.height : 44
+  }));
+};
+
+Icon44Spinner.mountIcon = mountIcon;
+var _default = Icon44Spinner;
+exports.default = _default;
+
+});
+
+var Spinner44 = /*@__PURE__*/getDefaultExportFromCjs(spinner$2);
+
+var spinner$3 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 16 16';
+var id = 'spinner_16';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="spinner_16"><path d="M8 16a1 1 0 110-2 6 6 0 10-5.7-4.12 1 1 0 11-1.9.626A8 8 0 118 16z" fill="currentColor" fill-rule="nonzero" /></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon16Spinner = function Icon16Spinner(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 16,
+    height: !isNaN(props.height) ? +props.height : 16
+  }));
+};
+
+Icon16Spinner.mountIcon = mountIcon;
+var _default = Icon16Spinner;
+exports.default = _default;
+
+});
+
+var Spinner16 = /*@__PURE__*/getDefaultExportFromCjs(spinner$3);
+
+var svgSpinner = function svgSpinner(size) {
+  switch (size) {
+    case 'large':
+      return /*#__PURE__*/react.createElement(Spinner44, {
+        className: "Spinner__self"
+      });
+
+    case 'medium':
+      return /*#__PURE__*/react.createElement(Spinner32, {
+        className: "Spinner__self"
+      });
+
+    case 'small':
+      return /*#__PURE__*/react.createElement(Spinner16, {
+        className: "Spinner__self"
+      });
+
+    default:
+      return /*#__PURE__*/react.createElement(Spinner24, {
+        className: "Spinner__self"
+      });
+  }
+};
+
+var Spinner = function Spinner(_ref) {
+  var className = _ref.className,
+      size = _ref.size,
+      restProps = objectWithoutProperties(_ref, ["className", "size"]);
+
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+    className: classNames(getClassname('Spinner', platform), className)
+  }), svgSpinner(size));
+};
+
+Spinner.defaultProps = {
+  size: 'regular'
+};
+var Spinner$1 = /*#__PURE__*/react.memo(Spinner);
+
+function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var Snackbar = /*#__PURE__*/function (_PureComponent) {
+  inherits(Snackbar, _PureComponent);
+
+  var _super = _createSuper$7(Snackbar);
+
+  function Snackbar(props) {
+    var _this;
+
+    classCallCheck(this, Snackbar);
+
+    _this = _super.call(this, props);
+
+    defineProperty(assertThisInitialized(_this), "innerEl", void 0);
+
+    defineProperty(assertThisInitialized(_this), "bodyElRef", void 0);
+
+    defineProperty(assertThisInitialized(_this), "shiftXPercent", void 0);
+
+    defineProperty(assertThisInitialized(_this), "shiftXCurrent", void 0);
+
+    defineProperty(assertThisInitialized(_this), "touchStartTime", void 0);
+
+    defineProperty(assertThisInitialized(_this), "animationFrame", void 0);
+
+    defineProperty(assertThisInitialized(_this), "closeTimeout", void 0);
+
+    defineProperty(assertThisInitialized(_this), "transitionFinishTimeout", void 0);
+
+    defineProperty(assertThisInitialized(_this), "setCloseTimeout", function () {
+      if (canUseDOM) {
+        _this.closeTimeout = setTimeout(function () {
+          _this.close();
+        }, _this.props.duration);
+      }
+    });
+
+    defineProperty(assertThisInitialized(_this), "clearCloseTimeout", function () {
+      clearTimeout(_this.closeTimeout);
+    });
+
+    defineProperty(assertThisInitialized(_this), "onActionClick", function (e) {
+      _this.close();
+
+      if (_this.props.action && typeof _this.props.onActionClick === 'function') {
+        _this.props.onActionClick(e);
+      }
+    });
+
+    defineProperty(assertThisInitialized(_this), "getInnerRef", function (el) {
+      return _this.innerEl = el;
+    });
+
+    defineProperty(assertThisInitialized(_this), "onTouchStart", function () {
+      _this.clearCloseTimeout();
+    });
+
+    defineProperty(assertThisInitialized(_this), "onTouchMoveX", function (event) {
+      var shiftX = event.shiftX,
+          startT = event.startT,
+          originalEvent = event.originalEvent;
+      originalEvent.preventDefault();
+
+      if (!_this.state.touched) {
+        _this.setState({
+          touched: true
+        });
+      }
+
+      _this.shiftXPercent = shiftX / _this.window.innerWidth * 100;
+      _this.shiftXCurrent = rubber(_this.shiftXPercent, 72, 1.2, _this.props.platform === ANDROID);
+      _this.touchStartTime = startT;
+
+      _this.setBodyTransform(_this.shiftXCurrent);
+    });
+
+    defineProperty(assertThisInitialized(_this), "onTouchEnd", function () {
+      var newState = {
+        touched: false
+      };
+      var callback;
+
+      if (_this.state.touched) {
+        var shiftXReal = _this.shiftXCurrent;
+        var expectTranslateY = shiftXReal / (Date.now() - _this.touchStartTime.getTime()) * 240 * 0.6 * (_this.shiftXPercent < 0 ? -1 : 1);
+        shiftXReal = shiftXReal + expectTranslateY;
+
+        if (shiftXReal >= 50) {
+          _this.clearCloseTimeout();
+
+          _this.waitTransitionFinish(_this.bodyElRef.current, function () {
+            _this.props.onClose();
+          });
+
+          _this.setBodyTransform(120);
+        } else {
+          callback = function callback() {
+            _this.setCloseTimeout();
+
+            _this.setBodyTransform(0);
+          };
+        }
+      } else {
+        _this.setCloseTimeout();
+      }
+
+      _this.setState(newState, callback);
+    });
+
+    _this.state = {
+      closing: false,
+      touched: false
+    };
+    _this.bodyElRef = /*#__PURE__*/react.createRef();
+    _this.shiftXPercent = 0;
+    _this.shiftXCurrent = 0;
+    return _this;
+  }
+
+  createClass(Snackbar, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setCloseTimeout();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.clearCloseTimeout();
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      var _this2 = this;
+
+      this.setState({
+        closing: true
+      });
+      this.waitTransitionFinish(this.innerEl, function () {
+        _this2.props.onClose();
+      });
+    }
+  }, {
+    key: "waitTransitionFinish",
+    value: function waitTransitionFinish(element, eventHandler) {
+      if (element) {
+        {
+          clearTimeout(this.transitionFinishTimeout);
+          this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 400 : 320);
+        }
+      }
+    }
+  }, {
+    key: "setBodyTransform",
+    value: function setBodyTransform(percent) {
+      var _this3 = this;
+
+      cancelAnimationFrame(this.animationFrame);
+      this.animationFrame = requestAnimationFrame(function () {
+        _this3.bodyElRef.current.style.transform = "translate3d(".concat(percent, "%, 0, 0)");
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          platform = _this$props.platform,
+          layout = _this$props.layout,
+          action = _this$props.action,
+          before = _this$props.before,
+          after = _this$props.after,
+          viewWidth = _this$props.viewWidth;
+      var isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+      var resolvedLayout = after || isDesktop ? 'vertical' : layout;
+      return /*#__PURE__*/react.createElement(FixedLayout$1, {
+        vertical: "bottom",
+        className: classNames(getClassname('Snackbar', platform), className, "Snackbar--l-".concat(resolvedLayout), {
+          'Snackbar--closing': this.state.closing,
+          'Snackbar--touched': this.state.touched,
+          'Snackbar--desktop': isDesktop
+        })
+      }, /*#__PURE__*/react.createElement(Touch, {
+        className: "Snackbar__in",
+        getRootRef: this.getInnerRef,
+        onStart: this.onTouchStart,
+        onMoveX: this.onTouchMoveX,
+        onEnd: this.onTouchEnd
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "Snackbar__body",
+        ref: this.bodyElRef
+      }, before && /*#__PURE__*/react.createElement("div", {
+        className: "Snackbar__before"
+      }, before), /*#__PURE__*/react.createElement("div", {
+        className: "Snackbar__content"
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "Snackbar__content-text"
+      }, children), action && /*#__PURE__*/react.createElement("button", {
+        className: "Snackbar__action",
+        onClick: this.onActionClick
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "Snackbar__action-self"
+      }, action))), after && /*#__PURE__*/react.createElement("div", {
+        className: "Snackbar__after"
+      }, after))));
+    }
+  }, {
+    key: "window",
+    get: function get() {
+      return this.context.window || window;
+    }
+  }]);
+
+  return Snackbar;
+}(react.PureComponent);
+
+defineProperty(Snackbar, "defaultProps", {
+  duration: 4000
+});
+
+defineProperty(Snackbar, "contextTypes", {
+  window: propTypes.any,
+  document: propTypes.any
+});
+
+var Snackbar$1 = withPlatform(withAdaptivity(Snackbar, {
+  viewWidth: true
+}));
+
 var chevron = createCommonjsModule(function (module, exports) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -2846,4 +3360,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
-export { Avatar, Div, FixedLayout$1 as FixedLayout, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Root$1 as Root, SimpleCell$1 as SimpleCell, Tappable$1 as Tappable, View$1 as View, classNames, getClassname as getClassName, usePlatform };
+export { Avatar, Div, FixedLayout$1 as FixedLayout, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Root$1 as Root, SimpleCell$1 as SimpleCell, Snackbar$1 as Snackbar, Spinner$1 as Spinner, Tappable$1 as Tappable, View$1 as View, classNames, getClassname as getClassName, usePlatform };

@@ -14,7 +14,9 @@ export class App extends React.Component {
       history: [{
         view: 'main',
         panel: 'main'
-      }]
+      }],
+      center: [45, 60],
+      zoom: 4
     };
     this.setView = this.setView.bind(this);
     this.setPanel = this.setPanel.bind(this);
@@ -91,8 +93,14 @@ export class App extends React.Component {
 
   render() {
     const {
+      vkAPI
+    } = this.props;
+    const {
       activeView,
-      activePanel
+      activePanel,
+      scheme,
+      center,
+      zoom
     } = this.state;
     return /*#__PURE__*/React.createElement(Root, {
       activeView: activeView
@@ -102,7 +110,17 @@ export class App extends React.Component {
     }, /*#__PURE__*/React.createElement(Panel, {
       id: "main"
     }, /*#__PURE__*/React.createElement(Main, {
-      setPanel: this.setPanel
+      setPanel: this.setPanel,
+      scheme: scheme,
+      vkAPI: vkAPI,
+      center: center,
+      zoom: zoom,
+      updateMap: (center, zoom) => {
+        this.setState({
+          zoom,
+          center
+        });
+      }
     })), /*#__PURE__*/React.createElement(Panel, {
       id: "newsfeed"
     })));
