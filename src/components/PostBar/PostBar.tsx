@@ -4,6 +4,7 @@ import {
   getClassName,
   classNames,
   Tappable,
+  Div,
 } from '@vkontakte/vkui';
 import type { HasRootRef } from '@vkontakte/vkui/dist/types';
 import {
@@ -17,7 +18,7 @@ export interface PostBarProps extends HTMLAttributes<HTMLElement>, HasRootRef<HT
   likes: number;
   comments: number;
   reposts: number;
-  views: string;
+  views: number;
 }
 
 const PostBar: FC<PostBarProps> = ({
@@ -30,6 +31,15 @@ const PostBar: FC<PostBarProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
+
+  const fmtCount = (count: number): number | string => {
+    if (count % 1000) {
+      const thousands = Math.floor(count / 1000);
+      const hundreds = Math.floor((count - 1000 * thousands) / 100);
+      return `${thousands},${hundreds}K`;
+    }
+    return count;
+  }
 
   return (
     <div
@@ -50,7 +60,7 @@ const PostBar: FC<PostBarProps> = ({
       </Tappable>
       <div className="PostBar__views">
         <Icon24View width={20} height={20} />
-        {views}
+        {fmtCount(views)}
       </div>
     </div>
   );

@@ -47,7 +47,6 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
         }} >
           {walls.map(wall => (
             <Post
-              author={{ id: 100, name: 'ВКонтакте', photo_100: '' }}
               date="час назад"
               likes={65}
               comments={65}

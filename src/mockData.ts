@@ -11,13 +11,37 @@ const autumn: Wall[] = [
         text: 'Бонжур',
         attachments: [],
         comments: {
-            count: 1212,
+            count: 121,
         },
         likes: {
-            count: 4554
+            count: 455
         },
         reposts: {
-            count: 1233,
+            count: 293,
+            wall_count: 123,
+            mail_count: 11,
+        },
+        views: {
+            count: 12332
+        },
+        is_favorite: false,
+    },
+    {
+        id: -1,
+        date: 1,
+        owner_id: 1,
+        from_id: 1,
+        post_type: '',
+        text: 'Бонжур тужур',
+        attachments: [],
+        comments: {
+            count: 121,
+        },
+        likes: {
+            count: 455
+        },
+        reposts: {
+            count: 293,
             wall_count: 123,
             mail_count: 11,
         },
@@ -29,7 +53,7 @@ const autumn: Wall[] = [
 ];
 
 export const mockThemeWalls: ThemeWalls = {
-    Осень: [...autumn, ...autumn, ...autumn],
+    Осень: [...autumn, ...autumn],
     Фильмы: [],
     Работа: [],
     Карантин: [],

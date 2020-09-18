@@ -14,7 +14,7 @@
 }
 
 .PostBar__button .Icon {
-    margin-left: 16px; 
+    margin-left: 16px;
     margin-right: 4px;
     color: var(--content_placeholder_icon)
 }
@@ -28,8 +28,9 @@
     align-items: center;
     color: var(--content_placeholder_text)
 }
-.PostBar__views .Icon{
-    margin-left: 16px; 
+
+.PostBar__views .Icon {
+    margin-left: 0px;
     margin-right: 7px;
     color: var(--snippet_icon_tertiary);
 }
