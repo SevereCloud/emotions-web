@@ -184,6 +184,10 @@ export class App extends React.Component<AppProps, AppState> {
       themePoints: themePoints,
     });
 
+    console.log(center);
+    console.log(center[0].toFixed(5));
+    console.log(center[1].toFixed(5));
+
     Object.entries(themeSearch).forEach(([key, value]) => {
       const k = key as Theme;
 
