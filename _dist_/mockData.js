@@ -1,3 +1,19 @@
+const geo = {
+  type: '',
+  coordinates: '1.1 2.3',
+  place: {
+    created: 0,
+    id: 0,
+    is_deleted: false,
+    latitude: 30.3,
+    longitude: 31.4,
+    title: '',
+    total_checkins: 0,
+    updated: 0,
+    country: '',
+    city: ''
+  }
+};
 const autumn = [{
   id: 1,
   date: 1,
@@ -20,7 +36,8 @@ const autumn = [{
   views: {
     count: 12332
   },
-  is_favorite: false
+  is_favorite: false,
+  geo
 }, {
   id: -1,
   date: 1,
@@ -43,7 +60,8 @@ const autumn = [{
   views: {
     count: 12332
   },
-  is_favorite: false
+  is_favorite: false,
+  geo
 }];
 export const mockThemeWalls = {
   Осень: [...autumn, ...autumn],
