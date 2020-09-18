@@ -23,7 +23,7 @@ import { distance, getAppID, getCord } from './lib';
 interface AppState {
   scheme: AppearanceSchemeType;
   activeView: string;
-  activePanel: { [id: string]: string };
+  activePanel: string;
   popout?: React.ReactNode;
   history: Array<{ view: string; panel: string }>;
 
@@ -59,9 +59,9 @@ export class App extends React.Component<AppProps, AppState> {
     this.state = {
       scheme: 'bright_light',
       activeView: 'main',
-      activePanel: { newsfeed: 'newsfeed' },
+      activePanel: 'newsfeed',
       popout: null,
-      history: [{ view: 'main', panel: 'main' }],
+      history: [{ view: 'main', panel: 'map' }],
 
       center: [30.3, 59.9],
       zoom: 10,
@@ -114,8 +114,7 @@ export class App extends React.Component<AppProps, AppState> {
   }
 
   setView(view: string, name = 'main'): void {
-    const panel = { ...this.state.activePanel };
-    panel[view] = name;
+    const panel = this.state.activePanel;
 
     const newHistory = [...this.state.history, { view: view, panel: name }];
 
@@ -126,13 +125,12 @@ export class App extends React.Component<AppProps, AppState> {
     });
   }
 
-  setPanel(name: string): void {
-    const panel = { ...this.state.activePanel };
-    panel[this.state.activeView] = name;
+  setPanel(panel: string): void {
+    console.log('trigger set panel')
 
     const newHistory = [
       ...this.state.history,
-      { view: this.state.activeView, panel: name },
+      { view: this.state.activeView, panel },
     ];
 
     this.setState({ activePanel: panel, history: newHistory });
@@ -144,17 +142,18 @@ export class App extends React.Component<AppProps, AppState> {
 
   goBack(): void {
     const newHistory = [...this.state.history];
-    newHistory.pop();
-    const { view, panel } = newHistory[newHistory.length - 1];
+    if (newHistory.length > 1) {
+      newHistory.pop();
+      const { view, panel } = newHistory[newHistory.length - 1];
 
-    const p = { ...this.state.activePanel };
-    p[view] = panel;
+      const p = this.state.activePanel;
 
-    this.setState({
-      activeView: view,
-      activePanel: p,
-      history: newHistory,
-    });
+      this.setState({
+        activeView: view,
+        activePanel: p,
+        history: newHistory,
+      });
+    }
   }
 
   /**
@@ -339,12 +338,12 @@ export class App extends React.Component<AppProps, AppState> {
       themePoints,
       themeWalls,
     } = this.state;
-
+    console.log('RENDER', activePanel)
     return (
       <Root activeView={activeView}>
-        <View id="main" activePanel={activePanel['newsfeed']}>
+        <View id="main" activePanel={activePanel}>
           <Panel id="newsfeed">
-            <Newsfeed goBack={this.goBack} />
+            <Newsfeed goBack={() => this.setPanel('map')} />
           </Panel>
           <Panel id="map">
             <Main
