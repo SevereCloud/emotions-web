@@ -3057,6 +3057,26 @@ var Snackbar$1 = withPlatform(withAdaptivity(Snackbar, {
   viewWidth: true
 }));
 
+var Text = function Text(_ref) {
+  var children = _ref.children,
+      className = _ref.className,
+      weight = _ref.weight,
+      restProps = objectWithoutProperties(_ref, ["children", "className", "weight"]);
+
+  var platform = usePlatform();
+  var textWeight = weight;
+
+  if (platform === ANDROID) {
+    if (weight === 'semibold') {
+      textWeight = 'medium';
+    }
+  }
+
+  return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+    className: classNames(getClassname('Text', platform), "Text--w-".concat(textWeight), className)
+  }), children);
+};
+
 var chevron = createCommonjsModule(function (module, exports) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -3360,4 +3380,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
-export { Avatar, Div, FixedLayout$1 as FixedLayout, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Root$1 as Root, SimpleCell$1 as SimpleCell, Snackbar$1 as Snackbar, Spinner$1 as Spinner, Tappable$1 as Tappable, View$1 as View, classNames, getClassname as getClassName, usePlatform };
+export { Avatar, Div, FixedLayout$1 as FixedLayout, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Root$1 as Root, SimpleCell$1 as SimpleCell, Snackbar$1 as Snackbar, Spinner$1 as Spinner, Tappable$1 as Tappable, Text, View$1 as View, classNames, getClassname as getClassName, usePlatform };

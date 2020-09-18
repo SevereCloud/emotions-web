@@ -2,9 +2,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 import React from '../web_modules/react.js';
 import { Panel, Root, View } from '../web_modules/@vkontakte/vkui.js';
+import AppCTX from './appContext.js';
 import { Main } from './panels/Main.js';
+import { Newsfeed } from './panels/Newsfeed.js';
+import './components/Post/Post.css.proxy.js';
+import './components/PostBar/PostBar.css.proxy.js';
 import { themeSearch } from './types.js';
 import { distance, getAppID, getCord } from './lib.js';
+import mockData from './mockData.js';
 export class App extends React.Component {
   constructor(props) {
     super(props);
@@ -16,26 +21,16 @@ export class App extends React.Component {
     this.state = {
       scheme: 'bright_light',
       activeView: 'main',
-      activePanel: {
-        main: 'main'
-      },
+      activePanel: 'newsfeed',
       popout: null,
       history: [{
         view: 'main',
-        panel: 'main'
+        panel: 'map'
       }],
       center: [30.3, 59.9],
       zoom: 10,
-      themeWalls: {
-        Осень: [],
-        Фильмы: [],
-        Работа: [],
-        Карантин: [],
-        Игры: [],
-        Искусство: [],
-        Юмор: [],
-        Фотографии: []
-      },
+      themeWalls: mockData.themeWalls,
+      selectedTheme: 'Осень',
       themePoints: [],
       prevLoadCenter: [30.3, 59.9],
       accessToken: ''
@@ -74,9 +69,7 @@ export class App extends React.Component {
   }
 
   setView(view, name = 'main') {
-    const panel = { ...this.state.activePanel
-    };
-    panel[view] = name;
+    const panel = this.state.activePanel;
     const newHistory = [...this.state.history, {
       view: view,
       panel: name
@@ -88,13 +81,11 @@ export class App extends React.Component {
     });
   }
 
-  setPanel(name) {
-    const panel = { ...this.state.activePanel
-    };
-    panel[this.state.activeView] = name;
+  setPanel(panel) {
+    console.log('trigger set panel');
     const newHistory = [...this.state.history, {
       view: this.state.activeView,
-      panel: name
+      panel
     }];
     this.setState({
       activePanel: panel,
@@ -110,19 +101,20 @@ export class App extends React.Component {
 
   goBack() {
     const newHistory = [...this.state.history];
-    newHistory.pop();
-    const {
-      view,
-      panel
-    } = newHistory[newHistory.length - 1];
-    const p = { ...this.state.activePanel
-    };
-    p[view] = panel;
-    this.setState({
-      activeView: view,
-      activePanel: p,
-      history: newHistory
-    });
+
+    if (newHistory.length > 1) {
+      newHistory.pop();
+      const {
+        view,
+        panel
+      } = newHistory[newHistory.length - 1];
+      const p = this.state.activePanel;
+      this.setState({
+        activeView: view,
+        activePanel: p,
+        history: newHistory
+      });
+    }
   }
   /**
    * Загружает новости и распределяет их по точкам
@@ -315,13 +307,25 @@ export class App extends React.Component {
       themePoints,
       themeWalls
     } = this.state;
-    return /*#__PURE__*/React.createElement(Root, {
+    console.log(themeWalls);
+    return /*#__PURE__*/React.createElement(AppCTX.Provider, {
+      value: {
+        getUser: this.getUser,
+        getGroup: this.getGroup
+      }
+    }, /*#__PURE__*/React.createElement(Root, {
       activeView: activeView
     }, /*#__PURE__*/React.createElement(View, {
       id: "main",
-      activePanel: activePanel['main']
+      activePanel: activePanel
     }, /*#__PURE__*/React.createElement(Panel, {
-      id: "main"
+      id: "newsfeed"
+    }, /*#__PURE__*/React.createElement(Newsfeed, {
+      setPanel: this.setPanel,
+      theme: this.state.selectedTheme,
+      walls: this.state.themeWalls[this.state.selectedTheme]
+    })), /*#__PURE__*/React.createElement(Panel, {
+      id: "map"
     }, /*#__PURE__*/React.createElement(Main, {
       setPanel: this.setPanel,
       scheme: scheme,
@@ -331,9 +335,7 @@ export class App extends React.Component {
       updateMap: (center, zoom) => this.updateMap(center, zoom),
       themePoints: themePoints,
       themeWalls: themeWalls
-    })), /*#__PURE__*/React.createElement(Panel, {
-      id: "newsfeed"
-    })));
+    })))));
   }
 
 }

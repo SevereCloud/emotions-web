@@ -14,6 +14,17 @@ const PostBar = ({
   ...restProps
 }) => {
   const platform = usePlatform();
+
+  const fmtCount = count => {
+    if (count % 1000) {
+      const thousands = Math.floor(count / 1000);
+      const hundreds = Math.floor((count - 1000 * thousands) / 100);
+      return `${thousands},${hundreds}K`;
+    }
+
+    return count;
+  };
+
   return /*#__PURE__*/React.createElement("div", _extends({}, restProps, {
     className: classNames(className, getClassName('PostBar', platform))
   }), /*#__PURE__*/React.createElement(Tappable, {
@@ -27,7 +38,7 @@ const PostBar = ({
   }, /*#__PURE__*/React.createElement(Icon24View, {
     width: 20,
     height: 20
-  }), views));
+  }), fmtCount(views)));
 };
 
 export default PostBar;
