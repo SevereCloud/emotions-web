@@ -115,7 +115,8 @@ export class Main extends React.Component {
       zoom,
       updateMap,
       themePoints,
-      themeWalls
+      themeWalls,
+      setTheme
     } = this.props;
     const {
       snackbar
@@ -147,7 +148,8 @@ export class Main extends React.Component {
     }, this.themes.map((theme, key) => /*#__PURE__*/React.createElement(ThemeCard, {
       key: key,
       title: theme.name,
-      emoji: theme.emoji
+      emoji: theme.emoji,
+      onClick: () => setTheme(theme.theme)
     }, /*#__PURE__*/React.createElement("img", {
       src: theme.image,
       alt: ""
