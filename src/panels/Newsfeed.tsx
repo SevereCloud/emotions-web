@@ -13,6 +13,7 @@ import {
 import { Theme, themeName } from '../types';
 import type { Wall } from '../api';
 import Post from '../components/Post/Post';
+import Fab from '../components/ButtonFloating/Fab';
 
 // interface NewsfeedState {}
 
@@ -67,6 +68,7 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
             </Div>
           )}
         </div>
+        <Fab />
       </>
     );
   }

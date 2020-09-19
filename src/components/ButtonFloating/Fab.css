@@ -1,0 +1,57 @@
+.Fab {
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background: #4986cc;
+    border-radius: 50%;
+    z-index: 999;
+    box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.08), 0 0 2px 0 rgba(0, 0, 0, 0.08);
+}
+
+.Fab:active {
+    opacity: 0.7;
+}
+
+.Fab__in {
+    padding-top: 4px;
+    position: relative;
+    border-radius: inherit;
+}
+
+.Fab .Fab__in .Icon {
+    color: var(--accent);
+}
+
+
+/**
+    * iOS
+   */
+
+.Fab--ios.Fab--sz-d {
+    width: 44px;
+    height: 44px;
+}
+
+.Fab--ios.Fab--sz-m {
+    width: 40px;
+    height: 40px;
+}
+
+
+/**
+   * Android
+   */
+
+.Fab--android.Fab--sz-d {
+    width: 44px;
+    height: 44px;
+}
+
+.Fab--android.Fab--sz-m {
+    width: 40px;
+    height: 40px;
+}
