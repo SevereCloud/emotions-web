@@ -13,7 +13,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 12px;
+  padding-top: var(--panelheader_height_android);
   width: 100%;
 }
 
