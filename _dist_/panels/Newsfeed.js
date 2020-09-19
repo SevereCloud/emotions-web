@@ -2,6 +2,7 @@ import React from '../../web_modules/react.js';
 import { PanelHeader, Spinner, PanelHeaderBack, Div } from '../../web_modules/@vkontakte/vkui.js';
 import { themeName } from '../types.js';
 import Post from '../components/Post/Post.js';
+import PostInput from '../components/Post/PostInput.js';
 import Fab from '../components/ButtonFloating/Fab.js'; // interface NewsfeedState {}
 
 export class Newsfeed extends React.Component {
@@ -28,7 +29,7 @@ export class Newsfeed extends React.Component {
         paddingTop: 1,
         paddingBottom: 1
       }
-    }, walls.map((wall, key) => /*#__PURE__*/React.createElement(Post, {
+    }, /*#__PURE__*/React.createElement(PostInput, null), walls.map((wall, key) => /*#__PURE__*/React.createElement(Post, {
       key: key,
       date: "\u0447\u0430\u0441 \u043D\u0430\u0437\u0430\u0434",
       likes: 65,

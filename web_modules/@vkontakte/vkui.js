@@ -3384,6 +3384,20 @@ var Text = function Text(_ref) {
   }), children);
 };
 
+var IconButton = function IconButton(_ref) {
+  var className = _ref.className,
+      icon = _ref.icon,
+      restProps = objectWithoutProperties(_ref, ["className", "icon"]);
+
+  var Component = restProps.href ? 'a' : 'button';
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement(Tappable$1, _extends_1({}, restProps, {
+    Component: Component,
+    activeEffectDelay: 200,
+    className: classNames(getClassname('IconButton', platform), className)
+  }), icon);
+};
+
 var Card = function Card(_ref) {
   var size = _ref.size,
       mode = _ref.mode,
@@ -3948,6 +3962,229 @@ defineProperty(Search, "defaultProps", {
 
 var Search$1 = withPlatform(Search);
 
+var preventDefault = function preventDefault(e) {
+  return e.preventDefault();
+};
+
+var FormLayout = function FormLayout(props) {
+  var children = props.children,
+      Component = props.Component,
+      className = props.className,
+      getRef = props.getRef,
+      onSubmit = props.onSubmit,
+      restProps = objectWithoutProperties(props, ["children", "Component", "className", "getRef", "onSubmit"]);
+
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement(Component, _extends_1({}, restProps, {
+    className: classNames(getClassname('FormLayout', platform), className),
+    onSubmit: onSubmit,
+    ref: getRef
+  }), /*#__PURE__*/react.createElement("div", {
+    className: "FormLayout__container"
+  }, react.Children.toArray(children).map(function (field, i) {
+    if (field) {
+      var _field$props = field.props,
+          status = _field$props.status,
+          top = _field$props.top,
+          bottom = _field$props.bottom;
+      return /*#__PURE__*/react.createElement("div", {
+        className: classNames('FormLayout__row', defineProperty({}, "FormLayout__row--s-".concat(status), !!status)),
+        key: field.key || "row-".concat(i)
+      }, top && /*#__PURE__*/react.createElement("div", {
+        className: "FormLayout__row-top"
+      }, top), field, bottom && /*#__PURE__*/react.createElement("div", {
+        className: "FormLayout__row-bottom"
+      }, bottom));
+    } else {
+      return null;
+    }
+  })), Component === 'form' && /*#__PURE__*/react.createElement("input", {
+    type: "submit",
+    className: "FormLayout__submit",
+    value: ""
+  }));
+};
+
+FormLayout.defaultProps = {
+  Component: 'form',
+  onSubmit: preventDefault
+};
+
+var FormLayoutGroup = function FormLayoutGroup(_ref) {
+  var children = _ref.children,
+      top = _ref.top,
+      bottom = _ref.bottom,
+      className = _ref.className,
+      status = _ref.status,
+      _ref$mode = _ref.mode,
+      mode = _ref$mode === void 0 ? 'vertical' : _ref$mode,
+      restProps = objectWithoutProperties(_ref, ["children", "top", "bottom", "className", "status", "mode"]);
+
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement("div", _extends_1({
+    className: classNames(getClassname('FormLayoutGroup', platform), "FormLayoutGroup--".concat(mode), className)
+  }, restProps), mode === 'vertical' ? children : react.Children.toArray(children).map(function (field, index) {
+    if (field) {
+      var _field$props = field.props,
+          _status = _field$props.status,
+          _top = _field$props.top,
+          _bottom = _field$props.bottom;
+      return /*#__PURE__*/react.createElement("div", {
+        className: classNames('FormLayoutGroup__cell', defineProperty({}, "FormLayout__row--s-".concat(_status), !!_status)),
+        key: field.key || "row-".concat(index)
+      }, _top && /*#__PURE__*/react.createElement("div", {
+        className: "FormLayout__row-top"
+      }, _top), field, _bottom && /*#__PURE__*/react.createElement("div", {
+        className: "FormLayout__row-bottom"
+      }, _bottom));
+    } else {
+      return null;
+    }
+  }));
+};
+
+var FormField = function FormField(_ref) {
+  var Component = _ref.Component,
+      className = _ref.className,
+      children = _ref.children,
+      status = _ref.status,
+      getRootRef = _ref.getRootRef,
+      top = _ref.top,
+      bottom = _ref.bottom,
+      restProps = objectWithoutProperties(_ref, ["Component", "className", "children", "status", "getRootRef", "top", "bottom"]);
+
+  var platform = usePlatform();
+
+  var _useState = react.useState(false),
+      _useState2 = slicedToArray(_useState, 2),
+      hover = _useState2[0],
+      setHover = _useState2[1];
+
+  var handleMouseEnter = function handleMouseEnter(e) {
+    e.stopPropagation();
+    setHover(true);
+  };
+
+  var handleMouseLeave = function handleMouseLeave(e) {
+    e.stopPropagation();
+    setHover(false);
+  };
+
+  return /*#__PURE__*/react.createElement(Component, _extends_1({}, restProps, {
+    ref: getRootRef,
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    className: classNames(getClassname('FormField', platform), defineProperty({}, "FormField--s-".concat(status), status !== 'default'), className)
+  }), children, /*#__PURE__*/react.createElement("div", {
+    className: classNames('FormField__border', {
+      'FormField__border--hover': hover
+    })
+  }));
+};
+
+FormField.defaultProps = {
+  status: 'default',
+  Component: 'div'
+};
+
+var Input = function Input(_ref) {
+  var align = _ref.align,
+      status = _ref.status,
+      getRef = _ref.getRef,
+      className = _ref.className,
+      getRootRef = _ref.getRootRef,
+      top = _ref.top,
+      bottom = _ref.bottom,
+      sizeY = _ref.sizeY,
+      restProps = objectWithoutProperties(_ref, ["align", "status", "getRef", "className", "getRootRef", "top", "bottom", "sizeY"]);
+
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement(FormField, {
+    className: classNames(getClassname('Input', platform), className, defineProperty({}, "Input--".concat(align), !!align), "Input--sizeY-".concat(sizeY)),
+    status: status,
+    getRootRef: getRootRef
+  }, /*#__PURE__*/react.createElement("input", _extends_1({}, restProps, {
+    className: "Input__el",
+    ref: getRef
+  })));
+};
+
+Input.defaultProps = {
+  type: 'text'
+};
+var Input$1 = withAdaptivity(Input, {
+  sizeY: true
+});
+
+var cancel_outline = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 28 28';
+var id = 'cancel_outline_28';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" id="cancel_outline_28"><g fill="none" fill-rule="evenodd"><path d="M0 0h28v28H0z" /><path d="M6.293 6.293a1 1 0 011.414 0L14 12.585l6.293-6.292a1 1 0 011.32-.083l.094.083a1 1 0 010 1.414L15.415 14l6.292 6.293a1 1 0 01.083 1.32l-.083.094a1 1 0 01-1.414 0L14 15.415l-6.293 6.292a1 1 0 01-1.32.083l-.094-.083a1 1 0 010-1.414L12.585 14 6.293 7.707a1 1 0 01-.083-1.32z" fill="currentColor" fill-rule="nonzero" /></g></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon28CancelOutline = function Icon28CancelOutline(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 28,
+    height: !isNaN(props.height) ? +props.height : 28
+  }));
+};
+
+Icon28CancelOutline.mountIcon = mountIcon;
+var _default = Icon28CancelOutline;
+exports.default = _default;
+
+});
+
+var Icon28CancelOutline = /*@__PURE__*/getDefaultExportFromCjs(cancel_outline);
+
+var PanelHeaderClose = function PanelHeaderClose(_ref) {
+  var children = _ref.children,
+      restProps = objectWithoutProperties(_ref, ["children"]);
+
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement(PanelHeaderButton, restProps, platform === ANDROID ? /*#__PURE__*/react.createElement(Icon28CancelOutline, null) : children);
+};
+
+PanelHeaderClose.defaultProps = {
+  children: 'Отмена'
+};
+
 var chevron_back = createCommonjsModule(function (module, exports) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -4069,4 +4306,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
-export { Avatar, Card, CardScroll, Div, FixedLayout$1 as FixedLayout, HorizontalScroll, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Root$1 as Root, Search$1 as Search, SimpleCell$1 as SimpleCell, Snackbar$1 as Snackbar, Spinner$1 as Spinner, Tappable$1 as Tappable, Text, View$1 as View, classNames, getClassname as getClassName, usePlatform };
+export { Avatar, Card, CardScroll, Div, FixedLayout$1 as FixedLayout, FormLayout, FormLayoutGroup, HorizontalScroll, IconButton, Input$1 as Input, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, PanelHeaderClose, Root$1 as Root, Search$1 as Search, SimpleCell$1 as SimpleCell, Snackbar$1 as Snackbar, Spinner$1 as Spinner, Tappable$1 as Tappable, Text, View$1 as View, classNames, getClassname as getClassName, usePlatform };

@@ -212,8 +212,8 @@ var Icon24ShareOutline = function Icon24ShareOutline(props) {
 Icon24ShareOutline.mountIcon = mountIcon$3;
 
 var viewBox$4 = '0 0 24 24';
-var id$4 = 'view_24';
-var content$4 = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="view_24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z" /><path d="M12 19c-6 0-10-5.6-10-7 0-1.4 4-7 10-7s10 5.6 10 7c0 1.4-4 7-10 7zm0-2a5 5 0 100-10 5 5 0 000 10zm.001-2.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="currentColor" /></g></symbol>';
+var id$4 = 'upload_24';
+var content$4 = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="upload_24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z" /><path d="M9 16h6v-6h3.034a.4.4 0 00.283-.683l-6.034-6.034a.4.4 0 00-.566 0L5.683 9.317a.4.4 0 00.283.683H9v6zm-3 2h12a1 1 0 010 2H6a1 1 0 010-2z" fill="currentColor" /></g></symbol>';
 var isMounted$4 = false;
 
 function mountIcon$4() {
@@ -227,7 +227,7 @@ function mountIcon$4() {
   }
 }
 
-var Icon24View = function Icon24View(props) {
+var Icon24Upload = function Icon24Upload(props) {
   useIsomorphicLayoutEffect(function () {
     mountIcon$4();
   }, []);
@@ -239,11 +239,11 @@ var Icon24View = function Icon24View(props) {
   }));
 };
 
-Icon24View.mountIcon = mountIcon$4;
+Icon24Upload.mountIcon = mountIcon$4;
 
-var viewBox$5 = '0 0 28 28';
-var id$5 = 'location_outline_28';
-var content$5 = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" id="location_outline_28"><g fill="none" fill-rule="evenodd"><path d="M0 0h28v28H0z" /><path d="M12.326 16.08l-7.084-.738a2.5 2.5 0 01-.591-4.837l14.735-5.326a3 3 0 013.841 3.84l-5.326 14.736a2.5 2.5 0 01-4.838-.59l-.737-7.085zm-7.077-3.656a.5.5 0 00.2.929l7.89.822a1 1 0 01.892.891l.822 7.89a.5.5 0 00.967.119L21.346 8.34a1 1 0 00-1.28-1.28L5.33 12.385l-.082.039z" fill="currentColor" fill-rule="nonzero" /></g></symbol>';
+var viewBox$5 = '0 0 24 24';
+var id$5 = 'view_24';
+var content$5 = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="view_24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z" /><path d="M12 19c-6 0-10-5.6-10-7 0-1.4 4-7 10-7s10 5.6 10 7c0 1.4-4 7-10 7zm0-2a5 5 0 100-10 5 5 0 000 10zm.001-2.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="currentColor" /></g></symbol>';
 var isMounted$5 = false;
 
 function mountIcon$5() {
@@ -257,18 +257,48 @@ function mountIcon$5() {
   }
 }
 
-var Icon28LocationOutline = function Icon28LocationOutline(props) {
+var Icon24View = function Icon24View(props) {
   useIsomorphicLayoutEffect(function () {
     mountIcon$5();
   }, []);
   return react.createElement(SvgIcon, es6ObjectAssign.assign({}, props, {
     viewBox: viewBox$5,
     id: id$5,
+    width: !isNaN(props.width) ? +props.width : 24,
+    height: !isNaN(props.height) ? +props.height : 24
+  }));
+};
+
+Icon24View.mountIcon = mountIcon$5;
+
+var viewBox$6 = '0 0 28 28';
+var id$6 = 'location_outline_28';
+var content$6 = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" id="location_outline_28"><g fill="none" fill-rule="evenodd"><path d="M0 0h28v28H0z" /><path d="M12.326 16.08l-7.084-.738a2.5 2.5 0 01-.591-4.837l14.735-5.326a3 3 0 013.841 3.84l-5.326 14.736a2.5 2.5 0 01-4.838-.59l-.737-7.085zm-7.077-3.656a.5.5 0 00.2.929l7.89.822a1 1 0 01.892.891l.822 7.89a.5.5 0 00.967.119L21.346 8.34a1 1 0 00-1.28-1.28L5.33 12.385l-.082.039z" fill="currentColor" fill-rule="nonzero" /></g></symbol>';
+var isMounted$6 = false;
+
+function mountIcon$6() {
+  if (!isMounted$6) {
+    addSpriteSymbol(new browserSymbol({
+      id: id$6,
+      viewBox: viewBox$6,
+      content: content$6
+    }));
+    isMounted$6 = true;
+  }
+}
+
+var Icon28LocationOutline = function Icon28LocationOutline(props) {
+  useIsomorphicLayoutEffect(function () {
+    mountIcon$6();
+  }, []);
+  return react.createElement(SvgIcon, es6ObjectAssign.assign({}, props, {
+    viewBox: viewBox$6,
+    id: id$6,
     width: !isNaN(props.width) ? +props.width : 28,
     height: !isNaN(props.height) ? +props.height : 28
   }));
 };
 
-Icon28LocationOutline.mountIcon = mountIcon$5;
+Icon28LocationOutline.mountIcon = mountIcon$6;
 
-export { Icon16Clear, Icon24CommentOutline, Icon24LikeOutline, Icon24ShareOutline, Icon24View, Icon28LocationOutline };
+export { Icon16Clear, Icon24CommentOutline, Icon24LikeOutline, Icon24ShareOutline, Icon24Upload, Icon24View, Icon28LocationOutline };

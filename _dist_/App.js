@@ -5,6 +5,7 @@ import { Panel, Root, View } from '../web_modules/@vkontakte/vkui.js';
 import AppCTX from './appContext.js';
 import { Main } from './panels/Main.js';
 import { Newsfeed } from './panels/Newsfeed.js';
+import { CreatePost } from './panels/CreatePost.js';
 import './components/Post/Post.css.proxy.js';
 import './components/PostBar/PostBar.css.proxy.js';
 import { themeSearch } from './types.js';
@@ -355,7 +356,9 @@ export class App extends React.Component {
         this.setPanel('newsfeed');
         console.log(theme);
       }
-    })))));
+    })), /*#__PURE__*/React.createElement(Panel, {
+      id: "create-post"
+    }, /*#__PURE__*/React.createElement(CreatePost, null)))));
   }
 
 }
