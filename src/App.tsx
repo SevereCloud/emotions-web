@@ -59,7 +59,7 @@ export class App extends React.Component<AppProps, AppState> {
     this.state = {
       scheme: 'bright_light',
       activeView: 'main',
-      activePanel: 'newsfeed',
+      activePanel: 'map',
       popout: null,
       history: [{ view: 'main', panel: 'map' }],
 
