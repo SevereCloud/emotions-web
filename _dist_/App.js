@@ -24,7 +24,7 @@ export class App extends React.Component {
     this.state = {
       scheme: 'bright_light',
       activeView: 'main',
-      activePanel: 'newsfeed',
+      activePanel: 'map',
       popout: null,
       history: [{
         view: 'main',
