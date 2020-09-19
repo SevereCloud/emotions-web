@@ -1,7 +1,8 @@
 import React from '../../web_modules/react.js';
 import { PanelHeader, Spinner, PanelHeaderBack, Div } from '../../web_modules/@vkontakte/vkui.js';
 import { themeName } from '../types.js';
-import Post from '../components/Post/Post.js'; // interface NewsfeedState {}
+import Post from '../components/Post/Post.js';
+import Fab from '../components/ButtonFloating/Fab.js'; // interface NewsfeedState {}
 
 export class Newsfeed extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export class Newsfeed extends React.Component {
       style: {
         marginTop: 20
       }
-    }))));
+    }))), /*#__PURE__*/React.createElement(Fab, null));
   }
 
 }
