@@ -242,8 +242,8 @@ var Icon24ShareOutline = function Icon24ShareOutline(props) {
 Icon24ShareOutline.mountIcon = mountIcon$4;
 
 var viewBox$5 = '0 0 24 24';
-var id$5 = 'upload_24';
-var content$5 = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="upload_24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z" /><path d="M9 16h6v-6h3.034a.4.4 0 00.283-.683l-6.034-6.034a.4.4 0 00-.566 0L5.683 9.317a.4.4 0 00.283.683H9v6zm-3 2h12a1 1 0 010 2H6a1 1 0 010-2z" fill="currentColor" /></g></symbol>';
+var id$5 = 'view_24';
+var content$5 = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="view_24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z" /><path d="M12 19c-6 0-10-5.6-10-7 0-1.4 4-7 10-7s10 5.6 10 7c0 1.4-4 7-10 7zm0-2a5 5 0 100-10 5 5 0 000 10zm.001-2.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="currentColor" /></g></symbol>';
 var isMounted$5 = false;
 
 function mountIcon$5() {
@@ -257,7 +257,7 @@ function mountIcon$5() {
   }
 }
 
-var Icon24Upload = function Icon24Upload(props) {
+var Icon24View = function Icon24View(props) {
   useIsomorphicLayoutEffect(function () {
     mountIcon$5();
   }, []);
@@ -269,11 +269,11 @@ var Icon24Upload = function Icon24Upload(props) {
   }));
 };
 
-Icon24Upload.mountIcon = mountIcon$5;
+Icon24View.mountIcon = mountIcon$5;
 
-var viewBox$6 = '0 0 24 24';
-var id$6 = 'view_24';
-var content$6 = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="view_24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z" /><path d="M12 19c-6 0-10-5.6-10-7 0-1.4 4-7 10-7s10 5.6 10 7c0 1.4-4 7-10 7zm0-2a5 5 0 100-10 5 5 0 000 10zm.001-2.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="currentColor" /></g></symbol>';
+var viewBox$6 = '0 0 28 28';
+var id$6 = 'arrow_up_outline_28';
+var content$6 = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" id="arrow_up_outline_28"><g fill="none" fill-rule="evenodd"><path d="M0 0h28v28H0z" /><path d="M14 5h.02c.023 0 .046.002.07.004L14 5c.053 0 .104.004.155.011l.036.007c.254.046.475.184.62.377l7.896 7.898a1 1 0 01-1.32 1.497l-.094-.083L15 8.414V23.05c0 .525-.448.95-1 .95-.513 0-.936-.367-.993-.84L13 23.05V8.414l-6.293 6.293a1 1 0 01-1.32.083l-.094-.083a1 1 0 01-.083-1.32l.083-.094 7.895-7.898c.146-.193.367-.331.621-.378l.037-.005A.7.7 0 0114 5z" fill="currentColor" fill-rule="nonzero" /></g></symbol>';
 var isMounted$6 = false;
 
 function mountIcon$6() {
@@ -287,19 +287,19 @@ function mountIcon$6() {
   }
 }
 
-var Icon24View = function Icon24View(props) {
+var Icon28ArrowUpOutline = function Icon28ArrowUpOutline(props) {
   useIsomorphicLayoutEffect(function () {
     mountIcon$6();
   }, []);
   return react.createElement(SvgIcon, es6ObjectAssign.assign({}, props, {
     viewBox: viewBox$6,
     id: id$6,
-    width: !isNaN(props.width) ? +props.width : 24,
-    height: !isNaN(props.height) ? +props.height : 24
+    width: !isNaN(props.width) ? +props.width : 28,
+    height: !isNaN(props.height) ? +props.height : 28
   }));
 };
 
-Icon24View.mountIcon = mountIcon$6;
+Icon28ArrowUpOutline.mountIcon = mountIcon$6;
 
 var viewBox$7 = '0 0 28 28';
 var id$7 = 'location_outline_28';
@@ -331,4 +331,4 @@ var Icon28LocationOutline = function Icon28LocationOutline(props) {
 
 Icon28LocationOutline.mountIcon = mountIcon$7;
 
-export { Icon12Dropdown, Icon16Clear, Icon24CommentOutline, Icon24LikeOutline, Icon24ShareOutline, Icon24Upload, Icon24View, Icon28LocationOutline };
+export { Icon12Dropdown, Icon16Clear, Icon24CommentOutline, Icon24LikeOutline, Icon24ShareOutline, Icon24View, Icon28ArrowUpOutline, Icon28LocationOutline };
