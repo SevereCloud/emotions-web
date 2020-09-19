@@ -16,14 +16,14 @@ import {
   Text,
 } from '@vkontakte/vkui';
 import type { HasRootRef } from '@vkontakte/vkui/dist/types';
-import type { Wall, Profile, Group } from '../../api';
+import type { Wall, Profile, Group, Photo } from '../../api';
 import type { Author, ctxValue } from '../../types';
 import AppCTX from '../../appContext';
 import PostBar from '../PostBar/PostBar';
 
 export interface PostProps
   extends HTMLAttributes<HTMLElement>,
-    HasRootRef<HTMLElement> {
+  HasRootRef<HTMLElement> {
   date: string;
 
   likes: number;
@@ -71,6 +71,15 @@ const Post: FC<PostProps> = ({
     }
   }, [wall.owner_id]);
 
+  const photos = (
+    wall.attachments
+      ? wall.attachments
+        .filter(a => (a.type === "photo"))
+        .map(a => a.photo)
+      : []
+  ) as Photo[];
+
+
   return (
     <div
       {...restProps}
@@ -91,13 +100,25 @@ const Post: FC<PostProps> = ({
             <Text weight="regular">{wall.text}</Text>
           </Div>
         )}
-        <div
-          style={{
-            height: 150,
-            width: '100%',
-            backgroundColor: 'var(--placeholder_icon_background)',
-          }}
-        />
+        {photos.length === 1 && (
+          photos.map(({ sizes }) => {
+            const largestPhoto = sizes[sizes.length - 1];
+            return (
+              <img
+                src={largestPhoto.url}
+                style={{
+                  width: '100%',
+                  backgroundColor: 'var(--placeholder_icon_background)',
+                }}
+              />
+            );
+          })
+        )}
+        {photos.length > 1 && (
+          photos.map(({ sizes }) => (
+            <img src={sizes[0].url} />
+          ))
+        )}
       </div>
       <PostBar
         likes={wall.likes.count}
