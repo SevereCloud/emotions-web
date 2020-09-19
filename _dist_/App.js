@@ -27,12 +27,12 @@ export class App extends React.Component {
         view: 'main',
         panel: 'map'
       }],
-      center: [30.3, 59.9],
-      zoom: 10,
+      center: [30.3, 59.95],
+      zoom: 12,
       themeWalls: mockData.themeWalls,
       selectedTheme: 'Осень',
       themePoints: [],
-      prevLoadCenter: [30.3, 59.9],
+      prevLoadCenter: [30.3, 59.95],
       accessToken: ''
     };
     this.setView = this.setView.bind(this);
@@ -142,19 +142,24 @@ export class App extends React.Component {
     };
     const themePoints = [{
       center: center,
-      score: defaultScore
+      score: { ...defaultScore
+      }
     }, {
       center: [center[0] - 0.04, center[1] - 0.03],
-      score: defaultScore
+      score: { ...defaultScore
+      }
     }, {
       center: [center[0] - 0.04, center[1] + 0.03],
-      score: defaultScore
+      score: { ...defaultScore
+      }
     }, {
       center: [center[0] + 0.04, center[1] - 0.03],
-      score: defaultScore
+      score: { ...defaultScore
+      }
     }, {
       center: [center[0] + 0.04, center[1] + 0.03],
-      score: defaultScore
+      score: { ...defaultScore
+      }
     }];
     this.setState({
       prevLoadCenter: center,
@@ -175,7 +180,7 @@ export class App extends React.Component {
       }).then(resp => {
         this.profiles.push(...resp.profiles);
         this.groups.push(...resp.groups);
-        const themePoints = this.state.themePoints;
+        const themePoints = [...this.state.themePoints];
         const themeWalls = this.state.themeWalls;
         themeWalls[k] = resp.items; // Перебираем все новости
 
@@ -195,7 +200,7 @@ export class App extends React.Component {
             }
           }
 
-          themePoints[minIndex].score[k]++;
+          themePoints[minIndex].score[k] = themePoints[minIndex].score[k] + 1;
         }
 
         this.setState({

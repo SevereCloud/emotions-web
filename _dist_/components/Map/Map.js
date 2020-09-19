@@ -70,6 +70,13 @@ const accent = scheme => scheme === 'space_gray' ? '#71aaeb' : '#3f8ae0';
 
 const background_content = scheme => scheme === 'space_gray' ? '#19191a' : '#ffffff';
 
+function sortObjectEntries(obj, n) {
+  return Object.entries(obj).sort((a, b) => b[1] - a[1]).map(el => el[0]).slice(0, n);
+}
+
+const paddingPoints = [[0.001, -0.003], [-0.005, 0.003], [0.005, 0.003]];
+const radius = [50, 40, 30];
+const size = [0.8, 0.6, 0.4];
 export class MapComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -353,6 +360,23 @@ export class MapComponent extends React.Component {
     this.props.error(msg, duration);
   }
 
+  points(themePoints) {
+    const arr = [];
+    themePoints.map(themePoint => {
+      const top = sortObjectEntries(themePoint.score, 3);
+      top.map((k, i) => {
+        arr.push({
+          image: themeImage[k],
+          size: size[i],
+          name: 'a',
+          center: [themePoint.center[0] + paddingPoints[i][0], themePoint.center[1] + paddingPoints[i][1]],
+          radius: radius[i]
+        });
+      });
+    });
+    return arr;
+  }
+
   render() {
     const {
       scheme,
@@ -432,14 +456,17 @@ export class MapComponent extends React.Component {
       id: "theme",
       type: "circle",
       paint: {
-        'circle-radius': 30,
+        'circle-radius': ['get', 'radius'],
         'circle-color': background_content(scheme)
       }
-    }, themePoints.map(themePoint =>
+    }, this.points(themePoints).map(point =>
     /*#__PURE__*/
     // eslint-disable-next-line react/jsx-key
     React.createElement(Feature, {
-      coordinates: themePoint.center
+      properties: {
+        radius: point.radius
+      },
+      coordinates: point.center
     }))), /*#__PURE__*/React.createElement(Layer, {
       map: map,
       id: "theme-symbol",
@@ -448,15 +475,15 @@ export class MapComponent extends React.Component {
         'icon-image': ['get', 'image'],
         'icon-size': ['get', 'size']
       }
-    }, themePoints.map(themePoint =>
+    }, this.points(themePoints).map(point =>
     /*#__PURE__*/
     // eslint-disable-next-line react/jsx-key
     React.createElement(Feature, {
       properties: {
-        image: themeImage['Игры'],
-        size: 0.4
+        image: point.image,
+        size: point.size
       },
-      coordinates: themePoint.center
+      coordinates: point.center
     }))), Object.keys(themeWalls).map(key =>
     /*#__PURE__*/
     // eslint-disable-next-line react/jsx-key
