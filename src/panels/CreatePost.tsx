@@ -4,7 +4,7 @@ import {
   PanelHeaderClose,
   IconButton,
 } from '@vkontakte/vkui';
-import { Icon24Upload } from '@vkontakte/icons'
+import { Icon28ArrowUpOutline } from '@vkontakte/icons'
 import type { ctxValue } from '../types';
 import AppCTX from '../appContext';
 
@@ -22,8 +22,8 @@ export const CreatePost = () => {
       >
         Новый пост
         <IconButton
-          icon={<Icon24Upload />}
-          style={{ borderRadius: '50%' }}
+          onClick={() => setPanel('map')}
+          icon={<Icon28ArrowUpOutline />}
         />
       </PanelHeader>
       <textarea
