@@ -22,6 +22,10 @@ export const CreatePost = () => {
       >
         Новый пост
         <IconButton
+          style={{
+            pointerEvents: postText ? 'all' : 'all',
+            opacity: postText ? 1 : 0.5,
+          }}
           onClick={() => setPanel('map')}
           icon={<Icon28ArrowUpOutline />}
         />
