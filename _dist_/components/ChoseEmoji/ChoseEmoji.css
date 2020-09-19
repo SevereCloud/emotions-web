@@ -1,0 +1,76 @@
+.ChoseEmoji {
+  position: relative;
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 2px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  background-color: var(--background_content);
+}
+
+.ChoseEmoji__title {
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.ChoseEmoji__emoji {
+  padding: 8px 12px;
+}
+
+.ChoseEmoji__emoji img {
+  width: 16px;
+  height: 16px;
+}
+
+.ChoseEmoji__dropdown .Icon {
+  color: var(--accent);
+  transition: transform 0.5s;
+  padding: 14px 12px;
+}
+
+.ChoseEmoji--open .ChoseEmoji__dropdown .Icon {
+  transform: rotate(-180deg);
+}
+
+.ChoseEmoji--button {
+  box-shadow: none;
+  border-radius: 0;
+  animation: 0.3s new;
+}
+
+@keyframes new {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes first {
+  from {
+    margin-top: -36px;
+    opacity: 0;
+  }
+
+  to {
+    margin-top: 8px;
+    opacity: 1;
+  }
+}
+
+.ChoseEmoji--button:first-child {
+  animation: 0.3s first;
+  margin-top: 8px;
+  border-radius: 10px 10px 0 0;
+}
+
+.ChoseEmoji--button:last-child {
+  border-radius: 0 0 10px 10px;
+}
+
+.ChoseEmoji--button .ChoseEmoji__dropdown {
+  display: none;
+}

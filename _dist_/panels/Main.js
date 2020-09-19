@@ -4,12 +4,32 @@ import MapComponent from '../components/Map/Map.js';
 import { Icon16Clear } from '../../web_modules/@vkontakte/icons.js';
 import { themeEmoji, themeImageSrc, themeName, themesList } from '../types.js';
 import ThemeCard from '../components/ThemeCard/ThemeCard.js';
+import ChoseEmoji from '../components/ChoseEmoji/ChoseEmoji.js';
 import './Main.css.proxy.js';
+import high from '../markers/mood/high.png.proxy.js';
+import low from '../markers/mood/low.png.proxy.js';
+import negative from '../markers/mood/negative.png.proxy.js';
+import positive from '../markers/mood/positive.png.proxy.js';
+const moods = [{
+  name: 'Хорошее',
+  emoji: positive
+}, {
+  name: 'Плохое',
+  emoji: negative
+}, {
+  name: 'Спокойное',
+  emoji: low
+}, {
+  name: 'Активное',
+  emoji: high
+}];
 export class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       snackbar: null,
+      openEmoji: false,
+      selectMood: 'Хорошее',
       search: ''
     };
     this.error = this.error.bind(this);
@@ -63,9 +83,31 @@ export class Main extends React.Component {
       moveStart
     } = this.props;
     const {
+      openEmoji,
+      selectMood,
       snackbar
     } = this.state;
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(MapComponent, {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(FixedLayout, {
+      className: "FixedLayoutTop",
+      vertical: "top"
+    }, moods.filter(mood => mood.name === selectMood).map((mood, key) => /*#__PURE__*/React.createElement(ChoseEmoji, {
+      key: key,
+      emoji: mood.emoji,
+      open: openEmoji,
+      onClick: () => this.setState({
+        openEmoji: !openEmoji
+      })
+    }, mood.name, " \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u0435")), openEmoji && /*#__PURE__*/React.createElement("div", {
+      className: "List"
+    }, moods.filter(mood => mood.name !== selectMood).map((mood, key) => /*#__PURE__*/React.createElement(ChoseEmoji, {
+      key: key,
+      emoji: mood.emoji,
+      button: true,
+      onClick: () => this.setState({
+        selectMood: mood.name,
+        openEmoji: false
+      })
+    }, mood.name, " \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u0435")))), /*#__PURE__*/React.createElement(MapComponent, {
       moveStart: moveStart,
       vkAPI: vkAPI,
       center: center,
