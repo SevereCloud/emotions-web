@@ -9,7 +9,7 @@ import Layer from './layer';
 import Feature from './feature';
 import { getCord, isLaunchFromVK } from '../../lib';
 import type { Wall } from '../../api';
-import { themeImage, ThemePoint, ThemeWalls } from '../../types';
+import { Theme, themeImage, ThemePoint, ThemeWalls } from '../../types';
 import Image from './image';
 
 import art from '../../markers/art.png';
@@ -115,6 +115,31 @@ interface MapState {
   center: [number, number];
   zoom: number;
 }
+
+function sortObjectEntries(obj: { [s: string]: number }, n: number) {
+  return Object.entries(obj)
+    .sort((a, b) => b[1] - a[1])
+    .map((el) => el[0])
+    .slice(0, n);
+}
+
+interface topTheme {
+  image: string;
+  size: number;
+  radius: number;
+  name: string;
+  center: [number, number];
+}
+
+const paddingPoints = [
+  [0.001, -0.003],
+  [-0.005, 0.003],
+  [0.005, 0.003],
+];
+
+const radius = [50, 40, 30];
+
+const size = [0.8, 0.6, 0.4];
 
 export class MapComponent extends React.Component<MapProps, MapState> {
   constructor(props: MapProps) {
@@ -399,6 +424,27 @@ export class MapComponent extends React.Component<MapProps, MapState> {
     this.props.error(msg, duration);
   }
 
+  points(themePoints: ThemePoint[]): topTheme[] {
+    const arr: topTheme[] = [];
+    themePoints.map((themePoint) => {
+      const top = sortObjectEntries(themePoint.score, 3) as Theme[];
+      top.map((k, i) => {
+        arr.push({
+          image: themeImage[k],
+          size: size[i],
+          name: 'a',
+          center: [
+            themePoint.center[0] + paddingPoints[i][0],
+            themePoint.center[1] + paddingPoints[i][1],
+          ],
+          radius: radius[i],
+        });
+      });
+    });
+
+    return arr;
+  }
+
   render(): JSX.Element {
     const { scheme, themePoints, themeWalls } = this.props;
     const { ready, isGetGeodata, map, userCenter } = this.state;
@@ -450,13 +496,18 @@ export class MapComponent extends React.Component<MapProps, MapState> {
               id="theme"
               type="circle"
               paint={{
-                'circle-radius': 30,
+                'circle-radius': ['get', 'radius'],
                 'circle-color': background_content(scheme),
               }}
             >
-              {themePoints.map((themePoint) => (
+              {this.points(themePoints).map((point) => (
                 // eslint-disable-next-line react/jsx-key
-                <Feature coordinates={themePoint.center} />
+                <Feature
+                  properties={{
+                    radius: point.radius,
+                  }}
+                  coordinates={point.center}
+                />
               ))}
             </Layer>
             <Layer
@@ -468,14 +519,14 @@ export class MapComponent extends React.Component<MapProps, MapState> {
                 'icon-size': ['get', 'size'],
               }}
             >
-              {themePoints.map((themePoint) => (
+              {this.points(themePoints).map((point) => (
                 // eslint-disable-next-line react/jsx-key
                 <Feature
                   properties={{
-                    image: themeImage['Игры'],
-                    size: 0.4,
+                    image: point.image,
+                    size: point.size,
                   }}
-                  coordinates={themePoint.center}
+                  coordinates={point.center}
                 />
               ))}
             </Layer>

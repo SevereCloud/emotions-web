@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Panel,
-  Root,
-  View,
-  PanelHeader,
-} from '@vkontakte/vkui';
+import { Panel, Root, View } from '@vkontakte/vkui';
 import type {
   AppearanceSchemeType,
   UpdateConfigData,
@@ -67,14 +62,14 @@ export class App extends React.Component<AppProps, AppState> {
       popout: null,
       history: [{ view: 'main', panel: 'map' }],
 
-      center: [30.3, 59.9],
-      zoom: 10,
+      center: [30.3, 59.95],
+      zoom: 12,
 
       themeWalls: mockData.themeWalls,
       selectedTheme: 'Осень',
       themePoints: [],
 
-      prevLoadCenter: [30.3, 59.9],
+      prevLoadCenter: [30.3, 59.95],
 
       accessToken: '',
     };
@@ -122,7 +117,7 @@ export class App extends React.Component<AppProps, AppState> {
   }
 
   setPanel(panel: string): void {
-    console.log('trigger set panel')
+    console.log('trigger set panel');
 
     const newHistory = [
       ...this.state.history,
@@ -172,11 +167,23 @@ export class App extends React.Component<AppProps, AppState> {
       Фотографии: 0,
     };
     const themePoints: ThemePoint[] = [
-      { center: center, score: defaultScore },
-      { center: [center[0] - 0.04, center[1] - 0.03], score: defaultScore },
-      { center: [center[0] - 0.04, center[1] + 0.03], score: defaultScore },
-      { center: [center[0] + 0.04, center[1] - 0.03], score: defaultScore },
-      { center: [center[0] + 0.04, center[1] + 0.03], score: defaultScore },
+      { center: center, score: { ...defaultScore } },
+      {
+        center: [center[0] - 0.04, center[1] - 0.03],
+        score: { ...defaultScore },
+      },
+      {
+        center: [center[0] - 0.04, center[1] + 0.03],
+        score: { ...defaultScore },
+      },
+      {
+        center: [center[0] + 0.04, center[1] - 0.03],
+        score: { ...defaultScore },
+      },
+      {
+        center: [center[0] + 0.04, center[1] + 0.03],
+        score: { ...defaultScore },
+      },
     ];
 
     this.setState({
@@ -204,7 +211,7 @@ export class App extends React.Component<AppProps, AppState> {
           this.profiles.push(...resp.profiles);
           this.groups.push(...resp.groups);
 
-          const themePoints = this.state.themePoints;
+          const themePoints = [...this.state.themePoints];
           const themeWalls = this.state.themeWalls;
           themeWalls[k] = resp.items;
 
@@ -224,7 +231,7 @@ export class App extends React.Component<AppProps, AppState> {
               }
             }
 
-            themePoints[minIndex].score[k]++;
+            themePoints[minIndex].score[k] = themePoints[minIndex].score[k] + 1;
           }
 
           this.setState({
@@ -338,7 +345,7 @@ export class App extends React.Component<AppProps, AppState> {
       themePoints,
       themeWalls,
     } = this.state;
-    console.log(themeWalls)
+    console.log(themeWalls);
     return (
       <AppCTX.Provider
         value={{
