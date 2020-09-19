@@ -51,7 +51,10 @@ export interface ThemePoint {
   score: Score;
 }
 
+export type Panel = 'map' | 'newsfeed';
+
 export type ctxValue = {
+  setPanel: (panel: Panel) => void;
   getUser: (userId: number) => Profile;
   getGroup: (groupId: number) => Group;
 };

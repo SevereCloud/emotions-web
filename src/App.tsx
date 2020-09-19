@@ -349,6 +349,7 @@ export class App extends React.Component<AppProps, AppState> {
     return (
       <AppCTX.Provider
         value={{
+          setPanel: this.setPanel,
           getUser: this.getUser,
           getGroup: this.getGroup,
         }}
