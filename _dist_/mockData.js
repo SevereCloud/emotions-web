@@ -63,8 +63,8 @@ const autumn = [{
   is_favorite: false,
   geo
 }];
-export const mockThemeWalls = {
-  fall: [...autumn, ...autumn],
+export const mockThemeWallsVoid = {
+  fall: [],
   work: [],
   quarantine: [],
   film: [],
@@ -73,6 +73,10 @@ export const mockThemeWalls = {
   comedy: [],
   photo: []
 };
+export const mockThemeWalls = { ...mockThemeWallsVoid,
+  fall: [...autumn, ...autumn]
+};
 export default {
+  themeWallsVoid: mockThemeWallsVoid,
   themeWalls: mockThemeWalls
 };

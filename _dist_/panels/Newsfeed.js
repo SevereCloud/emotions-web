@@ -1,5 +1,5 @@
 import React from '../../web_modules/react.js';
-import { PanelHeader, PanelHeaderBack } from '../../web_modules/@vkontakte/vkui.js';
+import { PanelHeader, Spinner, PanelHeaderBack, Div } from '../../web_modules/@vkontakte/vkui.js';
 import { themeName } from '../types.js';
 import Post from '../components/Post/Post.js'; // interface NewsfeedState {}
 
@@ -14,8 +14,7 @@ export class Newsfeed extends React.Component {
       setPanel,
       walls,
       theme
-    } = this.props;
-    console.log('walls', walls); // const {  } = this.state;
+    } = this.props; // const {  } = this.state;
 
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelHeader, {
       separator: false,
@@ -36,6 +35,11 @@ export class Newsfeed extends React.Component {
       reposts: 4,
       views: "7,2\u041A",
       wall: wall
+    })), walls.length === 0 && /*#__PURE__*/React.createElement(Div, null, /*#__PURE__*/React.createElement(Spinner, {
+      size: "large",
+      style: {
+        marginTop: 20
+      }
     }))));
   }
 

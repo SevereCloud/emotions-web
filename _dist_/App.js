@@ -8,7 +8,7 @@ import { Newsfeed } from './panels/Newsfeed.js';
 import './components/Post/Post.css.proxy.js';
 import './components/PostBar/PostBar.css.proxy.js';
 import { themeSearch } from './types.js';
-import { distance, getAppID, getCord } from './lib.js';
+import { distance, getAppID, getCord, isLaunchFromVK } from './lib.js';
 import mockData from './mockData.js';
 export class App extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export class App extends React.Component {
       }],
       center: [30.3, 59.95],
       zoom: 12,
-      themeWalls: mockData.themeWalls,
+      themeWalls: isLaunchFromVK() ? mockData.themeWallsVoid : mockData.themeWalls,
       selectedTheme: 'fall',
       themePoints: [],
       prevLoadCenter: [30.3, 59.95],
