@@ -3384,6 +3384,98 @@ var Text = function Text(_ref) {
   }), children);
 };
 
+var Card = function Card(_ref) {
+  var size = _ref.size,
+      mode = _ref.mode,
+      children = _ref.children,
+      style = _ref.style,
+      className = _ref.className,
+      restProps = objectWithoutProperties(_ref, ["size", "mode", "children", "style", "className"]);
+
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+    style: style,
+    className: classNames(className, getClassname('Card', platform), "Card--sz-".concat(size), "Card--md-".concat(mode))
+  }), /*#__PURE__*/react.createElement("div", {
+    className: "Card__in"
+  }, children));
+};
+
+Card.defaultProps = {
+  size: 'm',
+  mode: 'tint'
+};
+
+var CardScroll = function CardScroll(_ref) {
+  var children = _ref.children,
+      className = _ref.className,
+      style = _ref.style,
+      restProps = objectWithoutProperties(_ref, ["children", "className", "style"]);
+
+  var platform = usePlatform();
+  var refs = react.useRef(new Array(react.Children.count(children)));
+  var refContainer = react.useRef(null);
+
+  function getScrollToLeft(offset) {
+    var containerWidth = refContainer.current.offsetWidth;
+    var slideIndex = refs.current.findIndex(function (el) {
+      return el.offsetLeft + el.offsetWidth - offset >= 0;
+    });
+
+    if (slideIndex === -1) {
+      return offset;
+    }
+
+    var slide = refs.current[slideIndex];
+
+    if (slideIndex === 0) {
+      return 0;
+    }
+
+    var marginRight = parseInt(window.getComputedStyle(slide).marginRight);
+    var scrollTo = slide.offsetLeft - (containerWidth - slide.offsetWidth) + marginRight;
+
+    if (scrollTo <= 2 * marginRight) {
+      return 0;
+    }
+
+    return scrollTo;
+  }
+
+  function getScrollToRight(offset) {
+    var containerWidth = refContainer.current.offsetWidth;
+    var slide = refs.current.find(function (el) {
+      return el.offsetLeft + el.offsetWidth - offset > containerWidth;
+    });
+
+    if (!slide) {
+      return offset;
+    }
+
+    var marginRight = parseInt(window.getComputedStyle(slide).marginRight);
+    return slide.offsetLeft - marginRight;
+  }
+
+  return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+    style: style,
+    className: classNames(className, getClassname('CardScroll', platform))
+  }), /*#__PURE__*/react.createElement(HorizontalScroll, {
+    getScrollToLeft: getScrollToLeft,
+    getScrollToRight: getScrollToRight,
+    showArrows: true
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "CardScroll__in",
+    ref: refContainer
+  }, react.Children.map(children, function (item, i) {
+    return /*#__PURE__*/react.createElement("div", {
+      className: 'CardScroll__slide' + (item.props.size === 'l' ? ' CardScroll__slide--sz-l' : ''),
+      ref: function ref(node) {
+        return refs.current[i] = node;
+      }
+    }, item);
+  }))));
+};
+
 var chevron = createCommonjsModule(function (module, exports) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -3977,4 +4069,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
-export { Avatar, Div, FixedLayout$1 as FixedLayout, HorizontalScroll, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Root$1 as Root, Search$1 as Search, SimpleCell$1 as SimpleCell, Snackbar$1 as Snackbar, Spinner$1 as Spinner, Tappable$1 as Tappable, Text, View$1 as View, classNames, getClassname as getClassName, usePlatform };
+export { Avatar, Card, CardScroll, Div, FixedLayout$1 as FixedLayout, HorizontalScroll, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Root$1 as Root, Search$1 as Search, SimpleCell$1 as SimpleCell, Snackbar$1 as Snackbar, Spinner$1 as Spinner, Tappable$1 as Tappable, Text, View$1 as View, classNames, getClassname as getClassName, usePlatform };

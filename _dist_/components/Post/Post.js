@@ -1,7 +1,7 @@
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 import React, { useContext, useEffect, useState } from '../../../web_modules/react.js';
-import { Div, SimpleCell, usePlatform, getClassName, classNames, Avatar, Text } from '../../../web_modules/@vkontakte/vkui.js';
+import { Div, SimpleCell, usePlatform, getClassName, classNames, Avatar, Card, CardScroll, Text } from '../../../web_modules/@vkontakte/vkui.js';
 import AppCTX from '../../appContext.js';
 import PostBar from '../PostBar/PostBar.js';
 
@@ -70,10 +70,28 @@ const Post = ({
         backgroundColor: 'var(--placeholder_icon_background)'
       }
     });
-  }), photos.length > 1 && photos.map(({
+  }), photos.length > 1 && /*#__PURE__*/React.createElement(CardScroll, {
+    style: {
+      paddingBottom: 20
+    }
+  }, photos.map(({
     sizes
-  }) => /*#__PURE__*/React.createElement("img", {
-    src: sizes[0].url
+  }) => {
+    const largestPhoto = sizes[sizes.length - 1];
+    return /*#__PURE__*/React.createElement(Card, {
+      mode: "outline",
+      size: "m",
+      style: {
+        backgroundColor: 'transparent'
+      }
+    }, /*#__PURE__*/React.createElement("img", {
+      src: largestPhoto.url,
+      style: {
+        maxWidth: window.innerWidth * 0.8,
+        borderRadius: 10,
+        backgroundColor: 'var(--placeholder_icon_background)'
+      }
+    }));
   }))), /*#__PURE__*/React.createElement(PostBar, {
     likes: wall.likes.count,
     comments: wall.comments.count,
