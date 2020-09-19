@@ -145,7 +145,7 @@ export interface FirstFrame {
 
 export interface WallGeo {
   type: string;
-  coordinates: string;
+  coordinates?: string;
   place: Place;
 }
 
