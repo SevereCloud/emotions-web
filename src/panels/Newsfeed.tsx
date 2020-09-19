@@ -8,7 +8,7 @@ import {
   PanelHeaderBack,
 } from '@vkontakte/vkui';
 
-import type { Theme } from '../types';
+import { Theme, themeName } from '../types';
 import type { Wall } from '../api';
 import Post from '../components/Post/Post';
 
@@ -28,7 +28,7 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
   }
 
   render(): JSX.Element {
-    const { setPanel, walls } = this.props;
+    const { setPanel, walls, theme } = this.props;
     console.log('walls', walls);
     // const {  } = this.state;
     return (
@@ -37,7 +37,7 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
           separator={false}
           left={<PanelHeaderBack onClick={() => setPanel('map')} />}
         >
-          Новости
+          {theme ? themeName[theme] : 'Новости'}
         </PanelHeader>
         <div
           style={{
