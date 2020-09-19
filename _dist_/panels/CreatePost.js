@@ -18,6 +18,10 @@ export const CreatePost = () => {
       onClick: () => setPanel('map')
     })
   }, "\u041D\u043E\u0432\u044B\u0439 \u043F\u043E\u0441\u0442", /*#__PURE__*/React.createElement(IconButton, {
+    style: {
+      pointerEvents: postText ? 'all' : 'all',
+      opacity: postText ? 1 : 0.5
+    },
     onClick: () => setPanel('map'),
     icon: /*#__PURE__*/React.createElement(Icon28ArrowUpOutline, null)
   })), /*#__PURE__*/React.createElement("textarea", {
