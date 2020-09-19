@@ -20,7 +20,37 @@ import {
   ThemeWalls,
 } from '../types';
 import ThemeCard from '../components/ThemeCard/ThemeCard';
+import ChoseEmoji from '../components/ChoseEmoji/ChoseEmoji';
 import './Main.css';
+
+import high from '../markers/mood/high.png';
+import low from '../markers/mood/low.png';
+import negative from '../markers/mood/negative.png';
+import positive from '../markers/mood/positive.png';
+
+interface Mood {
+  name: string;
+  emoji: string;
+}
+
+const moods: Mood[] = [
+  {
+    name: 'Хорошее',
+    emoji: positive,
+  },
+  {
+    name: 'Плохое',
+    emoji: negative,
+  },
+  {
+    name: 'Спокойное',
+    emoji: low,
+  },
+  {
+    name: 'Активное',
+    emoji: high,
+  },
+];
 
 interface MainState {
   search: string;
@@ -48,6 +78,8 @@ export interface MainProps {
 }
 
 interface MainState {
+  openEmoji: boolean;
+  selectMood: string;
   snackbar: JSX.Element | null;
 }
 
@@ -57,6 +89,8 @@ export class Main extends React.Component<MainProps, MainState> {
 
     this.state = {
       snackbar: null,
+      openEmoji: false,
+      selectMood: 'Хорошее',
       search: '',
     };
 
@@ -109,10 +143,42 @@ export class Main extends React.Component<MainProps, MainState> {
       setTheme,
       moveStart,
     } = this.props;
-    const { snackbar } = this.state;
+    const { openEmoji, selectMood, snackbar } = this.state;
 
     return (
       <>
+        <FixedLayout className="FixedLayoutTop" vertical="top">
+          {moods
+            .filter((mood) => mood.name === selectMood)
+            .map((mood, key) => (
+              <ChoseEmoji
+                key={key}
+                emoji={mood.emoji}
+                open={openEmoji}
+                onClick={() => this.setState({ openEmoji: !openEmoji })}
+              >
+                {mood.name} настроение
+              </ChoseEmoji>
+            ))}
+          {openEmoji && (
+            <div className="List">
+              {moods
+                .filter((mood) => mood.name !== selectMood)
+                .map((mood, key) => (
+                  <ChoseEmoji
+                    key={key}
+                    emoji={mood.emoji}
+                    button
+                    onClick={() =>
+                      this.setState({ selectMood: mood.name, openEmoji: false })
+                    }
+                  >
+                    {mood.name} настроение
+                  </ChoseEmoji>
+                ))}
+            </div>
+          )}
+        </FixedLayout>
         <MapComponent
           moveStart={moveStart}
           vkAPI={vkAPI}

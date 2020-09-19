@@ -8,3 +8,15 @@
 .Modal .HorizontalScroll {
   padding: 0 4px;
 }
+
+.FixedLayoutTop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: var(--panelheader_height_android);
+  width: 100%;
+}
+
+.FixedLayoutTop .List {
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 2px 24px rgba(0, 0, 0, 0.08);
+}
