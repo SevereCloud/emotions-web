@@ -59,12 +59,14 @@ export class Main extends React.Component {
       updateMap,
       themePoints,
       themeWalls,
-      setTheme
+      setTheme,
+      moveStart
     } = this.props;
     const {
       snackbar
     } = this.state;
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(MapComponent, {
+      moveStart: moveStart,
       vkAPI: vkAPI,
       center: center,
       zoom: zoom,

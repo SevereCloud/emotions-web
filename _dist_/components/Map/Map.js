@@ -126,6 +126,9 @@ export class MapComponent extends React.Component {
           map.setLayoutProperty(label, 'text-field', ['get', 'name_ru']);
         }
       });
+      map.on('movestart', () => {
+        this.props.moveStart();
+      });
       map.on('moveend', e => {
         const c = e.target.getCenter();
         this.setState({
@@ -467,7 +470,7 @@ export class MapComponent extends React.Component {
     /*#__PURE__*/
     // eslint-disable-next-line react/jsx-key
     React.createElement(Feature, {
-      coordinates: getCord(wall.geo.coordinates)
+      coordinates: getCord(wall.geo['coordinates'] !== undefined ? wall.geo.coordinates : '0 0')
     })))), /*#__PURE__*/React.createElement(Layer, {
       map: map,
       id: "theme",
