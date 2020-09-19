@@ -145,19 +145,19 @@ export class App extends React.Component {
       score: { ...defaultScore
       }
     }, {
-      center: [center[0] - 0.04, center[1] - 0.03],
+      center: [center[0] - 0.045, center[1] - 0.03],
       score: { ...defaultScore
       }
     }, {
-      center: [center[0] - 0.04, center[1] + 0.03],
+      center: [center[0] - 0.045, center[1] + 0.03],
       score: { ...defaultScore
       }
     }, {
-      center: [center[0] + 0.04, center[1] - 0.03],
+      center: [center[0] + 0.045, center[1] - 0.03],
       score: { ...defaultScore
       }
     }, {
-      center: [center[0] + 0.04, center[1] + 0.03],
+      center: [center[0] + 0.045, center[1] + 0.03],
       score: { ...defaultScore
       }
     }];
@@ -186,6 +186,11 @@ export class App extends React.Component {
 
         for (let i = 0; i < resp.items.length; i++) {
           const wall = resp.items[i];
+
+          if (!wall.geo.coordinates) {
+            continue;
+          }
+
           const wallCenter = getCord(wall.geo.coordinates); // ищем минимальное расстояние до центра точек
 
           let minDistance = 1;

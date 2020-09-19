@@ -257,7 +257,7 @@ export class MapComponent extends React.Component {
     let zoom = this.state.map?.getZoom();
 
     if (!zoom || zoom < 15) {
-      zoom = 15;
+      zoom = 12;
     }
 
     const set = (lat, long) => {
@@ -368,7 +368,7 @@ export class MapComponent extends React.Component {
         arr.push({
           image: themeImage[k],
           size: size[i],
-          name: 'a',
+          theme: k,
           center: [themePoint.center[0] + paddingPoints[i][0], themePoint.center[1] + paddingPoints[i][1]],
           radius: radius[i]
         });
@@ -397,7 +397,7 @@ export class MapComponent extends React.Component {
         top: 0,
         right: 0,
         left: 0,
-        bottom: 48
+        bottom: 152
       }
     }), ready && map && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Image, {
       map: map,
@@ -484,7 +484,11 @@ export class MapComponent extends React.Component {
       properties: {
         radius: point.radius
       },
-      coordinates: point.center
+      coordinates: point.center,
+      onClick: () => {
+        console.log(point);
+        console.log(point.theme);
+      }
     }))), /*#__PURE__*/React.createElement(Layer, {
       map: map,
       id: "theme-symbol",
@@ -502,7 +506,11 @@ export class MapComponent extends React.Component {
         image: point.image,
         size: point.size
       },
-      coordinates: point.center
+      coordinates: point.center,
+      onClick: () => {
+        console.log(point);
+        console.log(point.theme);
+      }
     })))), ready && /*#__PURE__*/React.createElement(ButtonFloating, {
       style: {
         position: 'absolute',
