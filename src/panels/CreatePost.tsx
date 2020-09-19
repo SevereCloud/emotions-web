@@ -47,6 +47,7 @@ export const CreatePost = () => {
           resize: 'none',
           caretColor: '#4986cc',
           fontSize: '1.25em',
+          color: 'var(--panel_tab_active_text)',
           backgroundColor: 'var(--background_content)'
         }}
       />
