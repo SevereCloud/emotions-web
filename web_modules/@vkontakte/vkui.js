@@ -2433,6 +2433,76 @@ var PanelHeader$1 = withAdaptivity(PanelHeader, {
   sizeX: true
 });
 
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+var arrayWithHoles = _arrayWithHoles;
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+var iterableToArrayLimit = _iterableToArrayLimit;
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+var arrayLikeToArray = _arrayLikeToArray;
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+
+var unsupportedIterableToArray = _unsupportedIterableToArray;
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+var nonIterableRest = _nonIterableRest;
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
+}
+
+var slicedToArray = _slicedToArray;
+
 var sprite = createCommonjsModule(function (module, exports) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -2556,6 +2626,243 @@ SvgIcon.defaultProps = {
 };
 
 });
+
+var chevron_right = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 24 24';
+var id = 'chevron_right_24';
+var content = '<symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chevron_right_24"><path d="M14.232 12L8.116 5.884a1.25 1.25 0 111.768-1.768l7 7a1.25 1.25 0 010 1.768l-7 7a1.25 1.25 0 01-1.768-1.768z" fill="currentColor" /></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon24ChevronRight = function Icon24ChevronRight(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 24,
+    height: !isNaN(props.height) ? +props.height : 24
+  }));
+};
+
+Icon24ChevronRight.mountIcon = mountIcon;
+var _default = Icon24ChevronRight;
+exports.default = _default;
+
+});
+
+var Icon24Chevron = /*@__PURE__*/getDefaultExportFromCjs(chevron_right);
+
+/**
+ * ease function
+ * @param x absolute progress of the animation in bounds 0 (beginning) and 1 (end)
+ */
+function easeInOutSine(x) {
+  return 0.5 * (1 - Math.cos(Math.PI * x));
+}
+/**
+ * timing method
+ */
+
+
+function now() {
+  return performance && performance.now ? performance.now() : Date.now();
+}
+/**
+ * Код анимации скрола, на основе полифила: https://github.com/iamdustan/smoothscroll
+ * Константа взята из полифила (468), на дизайн-ревью уточнили до 250
+ * @var {number} SCROLL_ONE_FRAME_TIME время анимации скролла
+ */
+
+
+var SCROLL_ONE_FRAME_TIME = 250;
+
+function doScroll(_ref) {
+  var scrollElement = _ref.scrollElement,
+      getScrollPosition = _ref.getScrollPosition,
+      animationQueue = _ref.animationQueue,
+      onScrollToRightBorder = _ref.onScrollToRightBorder,
+      onScrollEnd = _ref.onScrollEnd,
+      onScrollStart = _ref.onScrollStart,
+      initialScrollWidth = _ref.initialScrollWidth,
+      _ref$scrollAnimationD = _ref.scrollAnimationDuration,
+      scrollAnimationDuration = _ref$scrollAnimationD === void 0 ? SCROLL_ONE_FRAME_TIME : _ref$scrollAnimationD;
+
+  if (!scrollElement || !getScrollPosition) {
+    return;
+  }
+  /**
+   * максимальное значение сдвига влево
+   */
+
+
+  var maxLeft = initialScrollWidth - scrollElement.offsetWidth;
+  var startLeft = scrollElement.scrollLeft;
+  var endLeft = getScrollPosition(startLeft);
+  onScrollStart();
+
+  if (endLeft >= maxLeft) {
+    onScrollToRightBorder();
+    endLeft = maxLeft;
+  }
+
+  var startTime = now();
+
+  (function scroll() {
+    if (!scrollElement) {
+      onScrollEnd();
+      return;
+    }
+
+    var time = now();
+    var elapsed = Math.min((time - startTime) / scrollAnimationDuration, 1);
+    var value = easeInOutSine(elapsed);
+    var currentLeft = startLeft + (endLeft - startLeft) * value;
+    scrollElement.scrollLeft = Math.ceil(currentLeft);
+
+    if (scrollElement.scrollLeft !== endLeft) {
+      requestAnimationFrame(scroll);
+      return;
+    }
+
+    onScrollEnd();
+    animationQueue.shift();
+
+    if (animationQueue.length > 0) {
+      animationQueue[0]();
+    }
+  })();
+}
+
+var HorizontalScrollArrow = function HorizontalScrollArrow(props) {
+  var onClick = props.onClick,
+      direction = props.direction;
+  return /*#__PURE__*/react.createElement("div", {
+    className: "HorizontalScroll__arrow HorizontalScroll__arrow-".concat(direction),
+    onClick: onClick
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "HorizontalScroll__arrow-icon"
+  }, /*#__PURE__*/react.createElement(Icon24Chevron, null)));
+};
+
+var HorizontalScroll = function HorizontalScroll(props) {
+  var children = props.children,
+      getScrollToLeft = props.getScrollToLeft,
+      getScrollToRight = props.getScrollToRight,
+      _props$showArrows = props.showArrows,
+      showArrows = _props$showArrows === void 0 ? false : _props$showArrows,
+      scrollAnimationDuration = props.scrollAnimationDuration,
+      className = props.className,
+      restProps = objectWithoutProperties(props, ["children", "getScrollToLeft", "getScrollToRight", "showArrows", "scrollAnimationDuration", "className"]);
+
+  var _useState = react.useState(false),
+      _useState2 = slicedToArray(_useState, 2),
+      canScrollLeft = _useState2[0],
+      setCanScrollLeft = _useState2[1];
+
+  var _useState3 = react.useState(false),
+      _useState4 = slicedToArray(_useState3, 2),
+      canScrollRight = _useState4[0],
+      setCanScrollRight = _useState4[1];
+
+  var _useState5 = react.useState(0),
+      _useState6 = slicedToArray(_useState5, 2),
+      initialScrollWidth = _useState6[0],
+      setInitialScrollWidth = _useState6[1];
+
+  var isCustomScrollingRef = react.useRef(false);
+  var scrollerRef = react.useRef(null);
+  var animationQueue = react.useRef([]);
+
+  function scrollTo(getScrollPosition) {
+    animationQueue.current.push(function () {
+      return doScroll({
+        scrollElement: scrollerRef.current,
+        getScrollPosition: getScrollPosition,
+        animationQueue: animationQueue.current,
+        onScrollToRightBorder: function onScrollToRightBorder() {
+          return setCanScrollRight(false);
+        },
+        onScrollEnd: function onScrollEnd() {
+          return isCustomScrollingRef.current = false;
+        },
+        onScrollStart: function onScrollStart() {
+          return isCustomScrollingRef.current = true;
+        },
+        initialScrollWidth: initialScrollWidth,
+        scrollAnimationDuration: scrollAnimationDuration
+      });
+    });
+
+    if (animationQueue.current.length === 1) {
+      animationQueue.current[0]();
+    }
+  }
+
+  var onscroll = react.useCallback(function () {
+    if (showArrows && hasMouse && scrollerRef.current && !isCustomScrollingRef.current) {
+      setCanScrollLeft(scrollerRef.current.scrollLeft > 0);
+      setCanScrollRight(scrollerRef.current.scrollLeft + scrollerRef.current.offsetWidth < scrollerRef.current.scrollWidth);
+    }
+  }, []);
+  react.useEffect(function () {
+    scrollerRef.current && scrollerRef.current.addEventListener('scroll', onscroll);
+    scrollerRef.current && setInitialScrollWidth(scrollerRef.current.scrollWidth);
+    return function () {
+      return scrollerRef.current && scrollerRef.current.removeEventListener('scroll', onscroll);
+    };
+  }, []);
+  react.useEffect(onscroll, [scrollerRef]);
+  return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+    className: classNames('HorizontalScroll', className)
+  }), showArrows && hasMouse && canScrollLeft && /*#__PURE__*/react.createElement(HorizontalScrollArrow, {
+    direction: "left",
+    onClick: function onClick() {
+      return scrollTo(getScrollToLeft);
+    }
+  }), showArrows && hasMouse && canScrollRight && /*#__PURE__*/react.createElement(HorizontalScrollArrow, {
+    direction: "right",
+    onClick: function onClick() {
+      return scrollTo(getScrollToRight);
+    }
+  }), /*#__PURE__*/react.createElement("div", {
+    className: "HorizontalScroll__in",
+    ref: scrollerRef
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "HorizontalScroll__in-wrapper"
+  }, children)));
+};
 
 var spinner = createCommonjsModule(function (module, exports) {
 
@@ -3132,7 +3439,7 @@ exports.default = _default;
 
 });
 
-var Icon24Chevron = /*@__PURE__*/getDefaultExportFromCjs(chevron);
+var Icon24Chevron$1 = /*@__PURE__*/getDefaultExportFromCjs(chevron);
 
 var SimpleCell = function SimpleCell(_ref) {
   var before = _ref.before,
@@ -3167,7 +3474,7 @@ var SimpleCell = function SimpleCell(_ref) {
     className: "SimpleCell__indicator"
   }, indicator), hasAfter && /*#__PURE__*/react.createElement("div", {
     className: "SimpleCell__after"
-  }, after, expandable && platform === IOS && /*#__PURE__*/react.createElement(Icon24Chevron, null)));
+  }, after, expandable && platform === IOS && /*#__PURE__*/react.createElement(Icon24Chevron$1, null)));
 };
 
 SimpleCell.defaultProps = {
@@ -3258,6 +3565,296 @@ Avatar.defaultProps = {
   mode: 'default',
   shadow: true
 };
+
+var search_outline = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 16 16';
+var id = 'search_outline_16';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="search_outline_16"><g fill="none" fill-rule="evenodd" opacity=".92"><path opacity=".1" d="M0 0h16v16H0z" /><path d="M9.823 10.884a5.5 5.5 0 111.06-1.06l3.896 3.9a.75.75 0 01-1.061 1.06l-3.895-3.9zM6.5 10.5a4 4 0 100-8 4 4 0 000 8z" fill="currentColor" fill-rule="nonzero" /></g></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon16SearchOutline = function Icon16SearchOutline(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 16,
+    height: !isNaN(props.height) ? +props.height : 16
+  }));
+};
+
+Icon16SearchOutline.mountIcon = mountIcon;
+var _default = Icon16SearchOutline;
+exports.default = _default;
+
+});
+
+var Icon16SearchOutline = /*@__PURE__*/getDefaultExportFromCjs(search_outline);
+
+var clear = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 16 16';
+var id = 'clear_16';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="clear_16"><path d="M6.729 8.002L4.263 10.47a.9.9 0 101.273 1.273L8 9.275l2.465 2.468a.9.9 0 101.272-1.273L9.273 8.002l2.465-2.469a.9.9 0 10-1.272-1.273L8 6.728 5.536 4.26a.9.9 0 00-1.273 1.273l2.466 2.469zM8 16A8 8 0 118 0a8 8 0 010 16z" fill="currentColor" fill-rule="evenodd" /></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon16Clear = function Icon16Clear(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 16,
+    height: !isNaN(props.height) ? +props.height : 16
+  }));
+};
+
+Icon16Clear.mountIcon = mountIcon;
+var _default = Icon16Clear;
+exports.default = _default;
+
+});
+
+var Icon16Clear = /*@__PURE__*/getDefaultExportFromCjs(clear);
+
+function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+var searchId = 0;
+
+var Search = /*#__PURE__*/function (_Component) {
+  inherits(Search, _Component);
+
+  var _super = _createSuper$8(Search);
+
+  function Search(props) {
+    var _this;
+
+    classCallCheck(this, Search);
+
+    _this = _super.call(this, props);
+
+    defineProperty(assertThisInitialized(_this), "isControlledOutside", void 0);
+
+    defineProperty(assertThisInitialized(_this), "inputEl", void 0);
+
+    defineProperty(assertThisInitialized(_this), "searchId", void 0);
+
+    defineProperty(assertThisInitialized(_this), "onFocus", function (e) {
+      _this.setState({
+        focused: true
+      });
+
+      _this.props.onFocus && _this.props.onFocus(e);
+    });
+
+    defineProperty(assertThisInitialized(_this), "onBlur", function (e) {
+      _this.setState({
+        focused: false
+      });
+
+      _this.props.onBlur && _this.props.onBlur(e);
+    });
+
+    defineProperty(assertThisInitialized(_this), "onChange", function (e) {
+      var target = e.target;
+
+      if (!_this.isControlledOutside) {
+        _this.setState({
+          value: target.value
+        });
+      }
+
+      if (_this.props.onChange) {
+        _this.props.onChange(e);
+      }
+    });
+
+    defineProperty(assertThisInitialized(_this), "onCancel", function () {
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+      nativeInputValueSetter.call(_this.inputEl, '');
+      var ev2 = new Event('input', {
+        bubbles: true
+      });
+
+      _this.inputEl.dispatchEvent(ev2);
+    });
+
+    defineProperty(assertThisInitialized(_this), "onIconClickStart", function (e) {
+      _this.props.onIconClick && _this.props.onIconClick(e.originalEvent);
+    });
+
+    defineProperty(assertThisInitialized(_this), "onIconCancelClickStart", function (e) {
+      e.originalEvent.preventDefault();
+
+      _this.inputEl.focus();
+
+      _this.onCancel();
+    });
+
+    defineProperty(assertThisInitialized(_this), "inputRef", function (element) {
+      _this.inputEl = element;
+      setRef(element, _this.props.getRef);
+    });
+
+    var state = {
+      focused: false
+    };
+
+    if (props.hasOwnProperty('value')) {
+      _this.isControlledOutside = true;
+    } else {
+      state.value = props.defaultValue || '';
+    }
+
+    _this.searchId = "search-".concat(searchId++);
+    _this.state = state;
+    return _this;
+  }
+
+  createClass(Search, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          className = _this$props.className,
+          onFocus = _this$props.onFocus,
+          onBlur = _this$props.onBlur,
+          onChange = _this$props.onChange,
+          defaultValue = _this$props.defaultValue,
+          value = _this$props.value,
+          placeholder = _this$props.placeholder,
+          after = _this$props.after,
+          getRef = _this$props.getRef,
+          platform = _this$props.platform,
+          icon = _this$props.icon,
+          onIconClick = _this$props.onIconClick,
+          inputProps = objectWithoutProperties(_this$props, ["className", "onFocus", "onBlur", "onChange", "defaultValue", "value", "placeholder", "after", "getRef", "platform", "icon", "onIconClick"]);
+
+      return /*#__PURE__*/react.createElement("div", {
+        className: classNames(getClassname('Search', platform), {
+          'Search--focused': this.state.focused,
+          'Search--has-value': !!this.value,
+          'Search--has-after': !!after,
+          'Search--has-icon': !!icon
+        }, className)
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "Search__in"
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "Search__width"
+      }), /*#__PURE__*/react.createElement("div", {
+        className: "Search__control"
+      }, /*#__PURE__*/react.createElement("input", _extends_1({}, inputProps, {
+        ref: this.inputRef,
+        type: "text",
+        className: "Search__input",
+        onFocus: this.onFocus,
+        onBlur: this.onBlur,
+        onChange: this.onChange,
+        value: this.value
+      })), platform === IOS && after && /*#__PURE__*/react.createElement("div", {
+        className: "Search__after-width"
+      }, after), /*#__PURE__*/react.createElement("div", {
+        className: "Search__placeholder"
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "Search__placeholder-in"
+      }, /*#__PURE__*/react.createElement(Icon16SearchOutline, null), /*#__PURE__*/react.createElement("div", {
+        className: "Search__placeholder-text"
+      }, placeholder)))), /*#__PURE__*/react.createElement("div", {
+        className: "Search__after",
+        onClick: this.onCancel
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "Search__icons"
+      }, icon && /*#__PURE__*/react.createElement(Touch, {
+        onStart: this.onIconClickStart,
+        className: "Search__icon"
+      }, icon), !!this.value && /*#__PURE__*/react.createElement(Touch, {
+        onStart: this.onIconCancelClickStart,
+        className: "Search__icon"
+      }, /*#__PURE__*/react.createElement(Icon16Clear, null))), platform === IOS && after && /*#__PURE__*/react.createElement("div", {
+        className: "Search__after-in"
+      }, after))));
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this.isControlledOutside ? this.props.value : this.state.value;
+    }
+  }]);
+
+  return Search;
+}(react.Component);
+
+defineProperty(Search, "defaultProps", {
+  autoComplete: 'off',
+  placeholder: 'Поиск',
+  after: 'Отмена'
+});
+
+var Search$1 = withPlatform(Search);
 
 var chevron_back = createCommonjsModule(function (module, exports) {
 
@@ -3380,4 +3977,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
-export { Avatar, Div, FixedLayout$1 as FixedLayout, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Root$1 as Root, SimpleCell$1 as SimpleCell, Snackbar$1 as Snackbar, Spinner$1 as Spinner, Tappable$1 as Tappable, Text, View$1 as View, classNames, getClassname as getClassName, usePlatform };
+export { Avatar, Div, FixedLayout$1 as FixedLayout, HorizontalScroll, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Root$1 as Root, Search$1 as Search, SimpleCell$1 as SimpleCell, Snackbar$1 as Snackbar, Spinner$1 as Spinner, Tappable$1 as Tappable, Text, View$1 as View, classNames, getClassname as getClassName, usePlatform };
