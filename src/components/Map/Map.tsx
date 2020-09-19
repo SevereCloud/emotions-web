@@ -490,6 +490,27 @@ export class MapComponent extends React.Component<MapProps, MapState> {
             >
               {userCenter && <Feature coordinates={userCenter} />}
             </Layer>
+
+            {/* Точки постов */}
+            {Object.keys(themeWalls).map((key) => (
+              // eslint-disable-next-line react/jsx-key
+              <Layer
+                map={map}
+                id={`post${key}`}
+                type="symbol"
+                layout={{
+                  'icon-image': themeImage[key],
+                  'icon-size': 0.3,
+                }}
+                minZoom={12}
+              >
+                {themeWalls[key].map((wall) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <Feature coordinates={getCord(wall.geo.coordinates)} />
+                ))}
+              </Layer>
+            ))}
+
             {/* Тематические точки */}
             <Layer
               map={map}
@@ -499,6 +520,7 @@ export class MapComponent extends React.Component<MapProps, MapState> {
                 'circle-radius': ['get', 'radius'],
                 'circle-color': background_content(scheme),
               }}
+              maxZoom={13}
             >
               {this.points(themePoints).map((point) => (
                 // eslint-disable-next-line react/jsx-key
@@ -518,6 +540,7 @@ export class MapComponent extends React.Component<MapProps, MapState> {
                 'icon-image': ['get', 'image'],
                 'icon-size': ['get', 'size'],
               }}
+              maxZoom={13}
             >
               {this.points(themePoints).map((point) => (
                 // eslint-disable-next-line react/jsx-key
@@ -530,27 +553,6 @@ export class MapComponent extends React.Component<MapProps, MapState> {
                 />
               ))}
             </Layer>
-
-            {/* Точки постов */}
-            {Object.keys(themeWalls).map((key) => (
-              // eslint-disable-next-line react/jsx-key
-              <Layer
-                map={map}
-                id={`post${key}`}
-                type="circle"
-                paint={{
-                  'circle-radius': 1,
-                  'circle-color': background_content(scheme),
-                  'circle-stroke-width': 1,
-                  'circle-stroke-color': accent(scheme),
-                }}
-              >
-                {themeWalls[key].map((wall) => (
-                  // eslint-disable-next-line react/jsx-key
-                  <Feature coordinates={getCord(wall.geo.coordinates)} />
-                ))}
-              </Layer>
-            ))}
           </>
         )}
 
