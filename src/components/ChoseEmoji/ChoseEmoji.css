@@ -35,7 +35,7 @@
 
 .ChoseEmoji--button {
   box-shadow: none;
-  border-radius: 0;
+  border-radius: 0 !important;
   animation: 0.3s new;
 }
 
@@ -64,11 +64,11 @@
 .ChoseEmoji--button:first-child {
   animation: 0.3s first;
   margin-top: 8px;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0 !important;
 }
 
 .ChoseEmoji--button:last-child {
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px !important;
 }
 
 .ChoseEmoji--button .ChoseEmoji__dropdown {
