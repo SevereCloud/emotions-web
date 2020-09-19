@@ -63,6 +63,7 @@ export class App extends React.Component<AppProps, AppState> {
       popout: null,
       history: [{ view: 'main', panel: 'map' }],
 
+
       center: [30.3, 59.95],
       zoom: 12,
 
