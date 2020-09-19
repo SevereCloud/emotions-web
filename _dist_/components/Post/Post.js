@@ -42,7 +42,7 @@ const Post = ({
         photo_100: group.photo_100
       });
     }
-  }, []);
+  }, [wall.owner_id]);
   return /*#__PURE__*/React.createElement("div", _extends({}, restProps, {
     className: classNames(className, getClassName('Post', platform))
   }), /*#__PURE__*/React.createElement("div", {

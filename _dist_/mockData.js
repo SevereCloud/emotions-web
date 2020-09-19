@@ -65,11 +65,11 @@ const autumn = [{
 }];
 export const mockThemeWalls = {
   fall: [...autumn, ...autumn],
-  film: [],
   work: [],
   quarantine: [],
-  game: [],
+  film: [],
   art: [],
+  game: [],
   comedy: [],
   photo: []
 };
