@@ -72,6 +72,8 @@ export interface MainProps {
 
   themePoints: ThemePoint[];
   themeWalls: ThemeWalls; // FIXME: удалить, нужно только для дебага
+
+  setTheme: (theme: Theme) => void;
 }
 
 interface MainState {
@@ -131,6 +133,7 @@ export class Main extends React.Component<MainProps, MainState> {
       updateMap,
       themePoints,
       themeWalls,
+      setTheme,
     } = this.props;
     const { snackbar } = this.state;
 
@@ -155,7 +158,12 @@ export class Main extends React.Component<MainProps, MainState> {
           <HorizontalScroll>
             <div style={{ display: 'flex', minHeight: 100 }}>
               {this.themes.map((theme, key) => (
-                <ThemeCard key={key} title={theme.name} emoji={theme.emoji}>
+                <ThemeCard
+                  key={key}
+                  title={theme.name}
+                  emoji={theme.emoji}
+                  onClick={() => setTheme(theme.theme)}
+                >
                   <img src={theme.image} alt="" />
                 </ThemeCard>
               ))}
