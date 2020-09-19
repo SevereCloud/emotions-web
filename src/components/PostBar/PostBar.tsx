@@ -14,7 +14,9 @@ import {
   Icon24View,
 } from '@vkontakte/icons';
 
-export interface PostBarProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface PostBarProps
+  extends HTMLAttributes<HTMLElement>,
+    HasRootRef<HTMLElement> {
   likes: number;
   comments: number;
   reposts: number;
@@ -39,7 +41,7 @@ const PostBar: FC<PostBarProps> = ({
       return `${thousands},${hundreds}K`;
     }
     return count;
-  }
+  };
 
   return (
     <div

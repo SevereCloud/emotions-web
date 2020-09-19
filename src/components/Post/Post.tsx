@@ -23,7 +23,7 @@ import PostBar from '../PostBar/PostBar';
 
 export interface PostProps
   extends HTMLAttributes<HTMLElement>,
-  HasRootRef<HTMLElement> {
+    HasRootRef<HTMLElement> {
   date: string;
 
   likes: number;
@@ -51,7 +51,7 @@ const Post: FC<PostProps> = ({
     id: 100,
     name: 'ВКонтакте',
     photo_100: '',
-  })
+  });
 
   useEffect(() => {
     if (wall.owner_id >= 0) {
@@ -60,16 +60,16 @@ const Post: FC<PostProps> = ({
         id: wall.owner_id,
         name: `${profile.first_name} ${profile.last_name}`,
         photo_100: profile.photo_100,
-      })
+      });
     } else {
       const group = getGroup(wall.owner_id);
       setAuthor({
         id: wall.owner_id,
         name: group.name,
         photo_100: group.photo_100,
-      })
+      });
     }
-  })
+  });
 
   return (
     <div
