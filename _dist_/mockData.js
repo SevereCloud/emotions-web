@@ -73,8 +73,15 @@ export const mockThemeWallsVoid = {
   comedy: [],
   photo: []
 };
-export const mockThemeWalls = { ...mockThemeWallsVoid,
-  fall: [...autumn, ...autumn]
+export const mockThemeWalls = {
+  fall: [...autumn, ...autumn],
+  work: [...autumn, ...autumn],
+  quarantine: [...autumn, ...autumn],
+  film: [...autumn, ...autumn],
+  art: [...autumn, ...autumn],
+  game: [...autumn, ...autumn],
+  comedy: [...autumn, ...autumn],
+  photo: [...autumn, ...autumn]
 };
 export default {
   themeWallsVoid: mockThemeWallsVoid,
