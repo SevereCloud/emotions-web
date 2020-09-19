@@ -41,7 +41,7 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
         </PanelHeader>
         <div
           style={{
-            backgroundColor: '#efefef',
+            backgroundColor: 'var(--background_page)',
             paddingTop: 1,
             paddingBottom: 1,
           }}
