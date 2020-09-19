@@ -43,6 +43,7 @@ const Post = ({
       });
     }
   }, [wall.owner_id]);
+  const photos = wall.attachments ? wall.attachments.filter(a => a.type === "photo").map(a => a.photo) : [];
   return /*#__PURE__*/React.createElement("div", _extends({}, restProps, {
     className: classNames(className, getClassName('Post', platform))
   }), /*#__PURE__*/React.createElement("div", {
@@ -58,13 +59,22 @@ const Post = ({
     className: "Post__content"
   }, wall.text && /*#__PURE__*/React.createElement(Div, null, /*#__PURE__*/React.createElement(Text, {
     weight: "regular"
-  }, wall.text)), /*#__PURE__*/React.createElement("div", {
-    style: {
-      height: 150,
-      width: '100%',
-      backgroundColor: 'var(--placeholder_icon_background)'
-    }
-  })), /*#__PURE__*/React.createElement(PostBar, {
+  }, wall.text)), photos.length === 1 && photos.map(({
+    sizes
+  }) => {
+    const largestPhoto = sizes[sizes.length - 1];
+    return /*#__PURE__*/React.createElement("img", {
+      src: largestPhoto.url,
+      style: {
+        width: '100%',
+        backgroundColor: 'var(--placeholder_icon_background)'
+      }
+    });
+  }), photos.length > 1 && photos.map(({
+    sizes
+  }) => /*#__PURE__*/React.createElement("img", {
+    src: sizes[0].url
+  }))), /*#__PURE__*/React.createElement(PostBar, {
     likes: wall.likes.count,
     comments: wall.comments.count,
     reposts: wall.reposts.count,
