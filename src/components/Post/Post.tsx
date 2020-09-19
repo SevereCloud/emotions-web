@@ -69,7 +69,7 @@ const Post: FC<PostProps> = ({
         photo_100: group.photo_100,
       });
     }
-  }, []);
+  }, [wall.owner_id]);
 
   return (
     <div
