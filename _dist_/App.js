@@ -315,6 +315,7 @@ export class App extends React.Component {
     console.log(themeWalls);
     return /*#__PURE__*/React.createElement(AppCTX.Provider, {
       value: {
+        setPanel: this.setPanel,
         getUser: this.getUser,
         getGroup: this.getGroup
       }

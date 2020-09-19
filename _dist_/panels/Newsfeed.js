@@ -22,7 +22,7 @@ export class Newsfeed extends React.Component {
       })
     }, "\u041D\u043E\u0432\u043E\u0441\u0442\u0438"), /*#__PURE__*/React.createElement("div", {
       style: {
-        backgroundColor: '#efefef',
+        backgroundColor: 'var(--background_page)',
         paddingTop: 1,
         paddingBottom: 1
       }
