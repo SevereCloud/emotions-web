@@ -16,12 +16,7 @@ import './components/PostBar/PostBar.css';
 
 import { Score, Theme, ThemePoint, themeSearch, ThemeWalls } from './types';
 import type { ApiNewsfeedSearchResponse, Group, Profile } from './api';
-import {
-  distance,
-  getAppID,
-  getCord,
-  isLaunchFromVK,
-} from './lib';
+import { distance, getAppID, getCord, isLaunchFromVK } from './lib';
 import mockData from './mockData';
 
 interface AppState {
@@ -176,19 +171,19 @@ export class App extends React.Component<AppProps, AppState> {
     const themePoints: ThemePoint[] = [
       { center: center, score: { ...defaultScore } },
       {
-        center: [center[0] - 0.04, center[1] - 0.03],
+        center: [center[0] - 0.045, center[1] - 0.03],
         score: { ...defaultScore },
       },
       {
-        center: [center[0] - 0.04, center[1] + 0.03],
+        center: [center[0] - 0.045, center[1] + 0.03],
         score: { ...defaultScore },
       },
       {
-        center: [center[0] + 0.04, center[1] - 0.03],
+        center: [center[0] + 0.045, center[1] - 0.03],
         score: { ...defaultScore },
       },
       {
-        center: [center[0] + 0.04, center[1] + 0.03],
+        center: [center[0] + 0.045, center[1] + 0.03],
         score: { ...defaultScore },
       },
     ];
@@ -225,6 +220,9 @@ export class App extends React.Component<AppProps, AppState> {
           // Перебираем все новости
           for (let i = 0; i < resp.items.length; i++) {
             const wall = resp.items[i];
+            if (!wall.geo.coordinates) {
+              continue;
+            }
             const wallCenter = getCord(wall.geo.coordinates);
 
             // ищем минимальное расстояние до центра точек

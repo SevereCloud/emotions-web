@@ -127,7 +127,7 @@ interface topTheme {
   image: string;
   size: number;
   radius: number;
-  name: string;
+  theme: Theme;
   center: [number, number];
 }
 
@@ -326,7 +326,7 @@ export class MapComponent extends React.Component<MapProps, MapState> {
     // Приближаем если необходимо
     let zoom = this.state.map?.getZoom();
     if (!zoom || zoom < 15) {
-      zoom = 15;
+      zoom = 12;
     }
 
     const set = (lat: number, long: number) => {
@@ -432,7 +432,7 @@ export class MapComponent extends React.Component<MapProps, MapState> {
         arr.push({
           image: themeImage[k],
           size: size[i],
-          name: 'a',
+          theme: k as Theme,
           center: [
             themePoint.center[0] + paddingPoints[i][0],
             themePoint.center[1] + paddingPoints[i][1],
@@ -459,7 +459,7 @@ export class MapComponent extends React.Component<MapProps, MapState> {
             top: 0,
             right: 0,
             left: 0,
-            bottom: 48,
+            bottom: 152,
           }}
         />
 
@@ -529,6 +529,10 @@ export class MapComponent extends React.Component<MapProps, MapState> {
                     radius: point.radius,
                   }}
                   coordinates={point.center}
+                  onClick={() => {
+                    console.log(point);
+                    console.log(point.theme);
+                  }}
                 />
               ))}
             </Layer>
@@ -550,6 +554,10 @@ export class MapComponent extends React.Component<MapProps, MapState> {
                     size: point.size,
                   }}
                   coordinates={point.center}
+                  onClick={() => {
+                    console.log(point);
+                    console.log(point.theme);
+                  }}
                 />
               ))}
             </Layer>
