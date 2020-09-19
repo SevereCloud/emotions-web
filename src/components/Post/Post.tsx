@@ -13,6 +13,8 @@ import {
   classNames,
   Avatar,
   Tappable,
+  Card,
+  CardScroll,
   Text,
 } from '@vkontakte/vkui';
 import type { HasRootRef } from '@vkontakte/vkui/dist/types';
@@ -115,9 +117,29 @@ const Post: FC<PostProps> = ({
           })
         )}
         {photos.length > 1 && (
-          photos.map(({ sizes }) => (
-            <img src={sizes[0].url} />
-          ))
+          <CardScroll style={{ paddingBottom: 20 }}>
+            {
+              photos.map(({ sizes }) => {
+                const largestPhoto = sizes[sizes.length - 1];
+                return (
+                  <Card
+                    mode="outline"
+                    size="m"
+                    style={{ backgroundColor: 'transparent' }}
+                  >
+                    <img
+                      src={largestPhoto.url}
+                      style={{
+                        maxWidth: window.innerWidth * 0.8,
+                        borderRadius: 10,
+                        backgroundColor: 'var(--placeholder_icon_background)',
+                      }}
+                    />
+                  </Card>
+                )
+              })
+            }
+          </CardScroll>
         )}
       </div>
       <PostBar
