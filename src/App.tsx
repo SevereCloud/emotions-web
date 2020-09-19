@@ -373,6 +373,11 @@ export class App extends React.Component<AppProps, AppState> {
                 updateMap={(center, zoom) => this.updateMap(center, zoom)}
                 themePoints={themePoints}
                 themeWalls={themeWalls}
+                setTheme={(theme) => {
+                  this.setState({ selectedTheme: theme });
+                  this.setPanel('newsfeed');
+                  console.log(theme);
+                }}
               />
             </Panel>
           </View>
