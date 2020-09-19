@@ -7,35 +7,35 @@ export interface Author {
 }
 
 export type Theme =
-  | 'Осень'
-  | 'Фильмы'
-  | 'Работа'
-  | 'Карантин'
-  | 'Игры'
-  | 'Искусство'
-  | 'Юмор'
-  | 'Фотографии';
+  | 'fall'
+  | 'film'
+  | 'work'
+  | 'quarantine'
+  | 'game'
+  | 'art'
+  | 'comedy'
+  | 'photo';
 
 export const themeSearch: { [key in Theme]: string } = {
-  Осень: 'осень',
-  Фильмы: 'фильм',
-  Работа: 'работа',
-  Карантин: 'коронавирус',
-  Игры: 'игра',
-  Искусство: 'картина',
-  Юмор: 'юмор',
-  Фотографии: 'фотографии',
+  fall: 'осень',
+  film: 'фильм',
+  work: 'работа',
+  quarantine: 'коронавирус',
+  game: 'игра',
+  art: 'картина',
+  comedy: 'юмор',
+  photo: 'фотографии',
 };
 
 export const themeImage: { [key in Theme]: string } = {
-  Осень: 'image-fall',
-  Фильмы: 'image-film',
-  Работа: 'image-work',
-  Карантин: 'image-quarantine',
-  Игры: 'image-game',
-  Искусство: 'image-art',
-  Юмор: 'image-comedy',
-  Фотографии: 'image-photo',
+  fall: 'image-fall',
+  film: 'image-film',
+  work: 'image-work',
+  quarantine: 'image-quarantine',
+  game: 'image-game',
+  art: 'image-art',
+  comedy: 'image-comedy',
+  photo: 'image-photo',
 };
 
 // image-auto
