@@ -220,7 +220,7 @@ export class App extends React.Component<AppProps, AppState> {
           // Перебираем все новости
           for (let i = 0; i < resp.items.length; i++) {
             const wall = resp.items[i];
-            if (!wall.geo.coordinates) {
+            if (wall.geo['coordinates'] === undefined) {
               continue;
             }
             const wallCenter = getCord(wall.geo.coordinates);
@@ -250,6 +250,8 @@ export class App extends React.Component<AppProps, AppState> {
     });
   }
 
+  loadTimerId?: NodeJS.Timer;
+
   /**
    * Вызывается каждый раз при перемещении по карте
    * @param center координаты
@@ -258,16 +260,14 @@ export class App extends React.Component<AppProps, AppState> {
   updateMap(center: [number, number], zoom: number) {
     const { prevLoadCenter } = this.state;
 
-    // console.log(`zoom ${zoom} ${zoom > 10}`);
-    // console.log(`0 ${center[0]} ${Math.abs(prevLoadCenter[0] - center[0])}`);
-    // console.log(`1 ${center[1]} ${Math.abs(prevLoadCenter[1] - center[1])}`);
-
-    // TODO: проверка перемещения карты учитывая зум
     if (
-      Math.abs(prevLoadCenter[0] - center[0]) > 0.2 ||
-      Math.abs(prevLoadCenter[1] - center[1]) > 0.2
+      Math.abs(prevLoadCenter[0] - center[0]) > 0.1 ||
+      Math.abs(prevLoadCenter[1] - center[1]) > 0.1
     ) {
-      this.loadNews(center);
+      this.loadTimerId && clearTimeout(this.loadTimerId);
+      this.loadTimerId = setTimeout(() => {
+        this.loadNews(center);
+      }, 1500);
     }
 
     this.setState({ zoom, center });
@@ -371,6 +371,9 @@ export class App extends React.Component<AppProps, AppState> {
             <Panel id="map">
               <Main
                 setPanel={this.setPanel}
+                moveStart={() =>
+                  this.loadTimerId && clearTimeout(this.loadTimerId)
+                }
                 scheme={scheme}
                 vkAPI={vkAPI}
                 center={center}

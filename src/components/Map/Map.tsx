@@ -93,6 +93,7 @@ export interface MapProps {
   scheme: AppearanceSchemeType;
 
   updateMap?: (center: [number, number], zoom: number) => void;
+  moveStart: () => void;
 
   center: [number, number];
   zoom: number;
@@ -190,6 +191,10 @@ export class MapComponent extends React.Component<MapProps, MapState> {
         for (const label of LABELS) {
           map.setLayoutProperty(label, 'text-field', ['get', 'name_ru']);
         }
+      });
+
+      map.on('movestart', () => {
+        this.props.moveStart();
       });
 
       map.on('moveend', (e) => {
@@ -506,7 +511,13 @@ export class MapComponent extends React.Component<MapProps, MapState> {
               >
                 {themeWalls[key].map((wall) => (
                   // eslint-disable-next-line react/jsx-key
-                  <Feature coordinates={getCord(wall.geo.coordinates)} />
+                  <Feature
+                    coordinates={getCord(
+                      wall.geo['coordinates'] !== undefined
+                        ? wall.geo.coordinates
+                        : '0 0',
+                    )}
+                  />
                 ))}
               </Layer>
             ))}

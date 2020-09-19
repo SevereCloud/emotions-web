@@ -39,6 +39,7 @@ export interface MainProps {
   zoom: number;
 
   updateMap?: (center: [number, number], zoom: number) => void;
+  moveStart: () => void;
 
   themePoints: ThemePoint[];
   themeWalls: ThemeWalls; // FIXME: удалить, нужно только для дебага
@@ -106,12 +107,14 @@ export class Main extends React.Component<MainProps, MainState> {
       themePoints,
       themeWalls,
       setTheme,
+      moveStart,
     } = this.props;
     const { snackbar } = this.state;
 
     return (
       <>
         <MapComponent
+          moveStart={moveStart}
           vkAPI={vkAPI}
           center={center}
           zoom={zoom}
