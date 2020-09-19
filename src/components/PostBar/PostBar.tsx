@@ -35,8 +35,8 @@ const PostBar: FC<PostBarProps> = ({
   const platform = usePlatform();
 
   const fmtCount = (count: number): number | string => {
-    if (count % 1000) {
-      const thousands = Math.floor(count / 1000);
+    const thousands = Math.floor(count / 1000);
+    if (thousands > 0) {
       const hundreds = Math.floor((count - 1000 * thousands) / 100);
       return `${thousands},${hundreds}K`;
     }
