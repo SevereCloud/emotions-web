@@ -13,6 +13,7 @@ import {
 import { Theme, themeName } from '../types';
 import type { Wall } from '../api';
 import Post from '../components/Post/Post';
+import PostInput from '../components/Post/PostInput';
 import Fab from '../components/ButtonFloating/Fab';
 
 // interface NewsfeedState {}
@@ -48,6 +49,7 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
             paddingBottom: 1,
           }}
         >
+          <PostInput />
           {walls.map((wall, key) => (
             <Post
               key={key}

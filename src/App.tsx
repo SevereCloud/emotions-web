@@ -10,6 +10,7 @@ import AppCTX from './appContext';
 
 import { Main } from './panels/Main';
 import { Newsfeed } from './panels/Newsfeed';
+import { CreatePost } from './panels/CreatePost';
 
 import './components/Post/Post.css';
 import './components/PostBar/PostBar.css';
@@ -387,6 +388,9 @@ export class App extends React.Component<AppProps, AppState> {
                   console.log(theme);
                 }}
               />
+            </Panel>
+            <Panel id="create-post">
+              <CreatePost />
             </Panel>
           </View>
         </Root>
