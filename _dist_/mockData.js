@@ -64,14 +64,14 @@ const autumn = [{
   geo
 }];
 export const mockThemeWalls = {
-  Осень: [...autumn, ...autumn],
-  Фильмы: [],
-  Работа: [],
-  Карантин: [],
-  Игры: [],
-  Искусство: [],
-  Юмор: [],
-  Фотографии: []
+  fall: [...autumn, ...autumn],
+  film: [],
+  work: [],
+  quarantine: [],
+  game: [],
+  art: [],
+  comedy: [],
+  photo: []
 };
 export default {
   themeWalls: mockThemeWalls

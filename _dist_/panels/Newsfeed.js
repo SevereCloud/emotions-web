@@ -26,7 +26,8 @@ export class Newsfeed extends React.Component {
         paddingTop: 1,
         paddingBottom: 1
       }
-    }, walls.map(wall => /*#__PURE__*/React.createElement(Post, {
+    }, walls.map((wall, key) => /*#__PURE__*/React.createElement(Post, {
+      key: key,
       date: "\u0447\u0430\u0441 \u043D\u0430\u0437\u0430\u0434",
       likes: 65,
       comments: 65,

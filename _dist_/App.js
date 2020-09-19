@@ -30,7 +30,7 @@ export class App extends React.Component {
       center: [30.3, 59.95],
       zoom: 12,
       themeWalls: mockData.themeWalls,
-      selectedTheme: 'Осень',
+      selectedTheme: 'fall',
       themePoints: [],
       prevLoadCenter: [30.3, 59.95],
       accessToken: ''
@@ -131,14 +131,14 @@ export class App extends React.Component {
     } = this.state; // От центра ставим 5 точек (в центре и по углам)
 
     const defaultScore = {
-      Осень: 0,
-      Фильмы: 0,
-      Работа: 0,
-      Карантин: 0,
-      Игры: 0,
-      Искусство: 0,
-      Юмор: 0,
-      Фотографии: 0
+      fall: 0,
+      film: 0,
+      work: 0,
+      quarantine: 0,
+      game: 0,
+      art: 0,
+      comedy: 0,
+      photo: 0
     };
     const themePoints = [{
       center: center,
