@@ -16,7 +16,12 @@ import './components/PostBar/PostBar.css';
 
 import { Score, Theme, ThemePoint, themeSearch, ThemeWalls } from './types';
 import type { ApiNewsfeedSearchResponse, Group, Profile } from './api';
-import { distance, getAppID, getCord } from './lib';
+import {
+  distance,
+  getAppID,
+  getCord,
+  isLaunchFromVK,
+} from './lib';
 import mockData from './mockData';
 
 interface AppState {
@@ -65,7 +70,9 @@ export class App extends React.Component<AppProps, AppState> {
       center: [30.3, 59.95],
       zoom: 12,
 
-      themeWalls: mockData.themeWalls,
+      themeWalls: isLaunchFromVK()
+        ? mockData.themeWallsVoid
+        : mockData.themeWalls,
       selectedTheme: 'fall',
       themePoints: [],
 

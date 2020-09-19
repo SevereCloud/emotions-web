@@ -5,7 +5,9 @@ import {
   Group,
   PanelHeader,
   Button,
+  Spinner,
   PanelHeaderBack,
+  Div,
 } from '@vkontakte/vkui';
 
 import { Theme, themeName } from '../types';
@@ -29,7 +31,6 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
 
   render(): JSX.Element {
     const { setPanel, walls, theme } = this.props;
-    console.log('walls', walls);
     // const {  } = this.state;
     return (
       <>
@@ -57,6 +58,14 @@ export class Newsfeed extends React.Component<NewsfeedProps> {
               wall={wall}
             />
           ))}
+          {walls.length === 0 && (
+            <Div>
+              <Spinner
+                size="large"
+                style={{ marginTop: 20 }}
+              />
+            </Div>
+          )}
         </div>
       </>
     );
