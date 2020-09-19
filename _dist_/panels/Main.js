@@ -2,64 +2,9 @@ import React from '../../web_modules/react.js';
 import { Avatar, FixedLayout, HorizontalScroll, Search, Snackbar } from '../../web_modules/@vkontakte/vkui.js';
 import MapComponent from '../components/Map/Map.js';
 import { Icon16Clear } from '../../web_modules/@vkontakte/icons.js';
+import { themeEmoji, themeImageSrc, themeName, themesList } from '../types.js';
 import ThemeCard from '../components/ThemeCard/ThemeCard.js';
 import './Main.css.proxy.js';
-import high from '../markers/mood/high.png.proxy.js';
-import low from '../markers/mood/low.png.proxy.js';
-import negative from '../markers/mood/negative.png.proxy.js';
-import positive from '../markers/mood/positive.png.proxy.js';
-import art from '../markers/art.png.proxy.js';
-import fall from '../markers/fall.png.proxy.js';
-import film from '../markers/film.png.proxy.js';
-import game from '../markers/game.png.proxy.js';
-import quarantine from '../markers/quarantine.png.proxy.js';
-import work from '../markers/work.png.proxy.js';
-import comedy from '../markers/comedy.png.proxy.js';
-import photo from '../markers/photo.png.proxy.js';
-const themes = [// { name: 'Музыка', image: music, theme: 'music' },
-{
-  name: 'Фильмы',
-  image: film,
-  theme: 'film',
-  emoji: positive
-}, {
-  name: 'Осень',
-  image: fall,
-  theme: 'fall',
-  emoji: low
-}, {
-  name: 'Работа',
-  image: work,
-  theme: 'work',
-  emoji: high
-}, {
-  name: 'Карантин',
-  image: quarantine,
-  theme: 'quarantine',
-  emoji: negative
-}, // { name: 'IT', image: it, theme: 'it' },
-// { name: 'Авто', image: auto, theme: 'auto' },
-{
-  name: 'Игры',
-  image: game,
-  theme: 'game',
-  emoji: positive
-}, {
-  name: 'Искусство',
-  image: art,
-  theme: 'art',
-  emoji: high
-}, {
-  name: 'Юмор',
-  image: comedy,
-  theme: 'comedy',
-  emoji: positive
-}, {
-  name: 'Фото',
-  image: photo,
-  theme: 'photo',
-  emoji: high
-}];
 export class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -102,9 +47,7 @@ export class Main extends React.Component {
 
   get themes() {
     const search = this.state.search.toLowerCase();
-    return themes.filter(({
-      name
-    }) => name.toLowerCase().indexOf(search) > -1);
+    return themesList.filter(theme => themeName[theme].toLowerCase().indexOf(search) > -1);
   }
 
   render() {
@@ -145,13 +88,13 @@ export class Main extends React.Component {
         display: 'flex',
         minHeight: 100
       }
-    }, this.themes.map((theme, key) => /*#__PURE__*/React.createElement(ThemeCard, {
+    }, themesList.map((theme, key) => /*#__PURE__*/React.createElement(ThemeCard, {
       key: key,
-      title: theme.name,
-      emoji: theme.emoji,
-      onClick: () => setTheme(theme.theme)
+      title: themeName[theme],
+      emoji: themeEmoji[theme],
+      onClick: () => setTheme(theme)
     }, /*#__PURE__*/React.createElement("img", {
-      src: theme.image,
+      src: themeImageSrc[theme],
       alt: ""
     })))))), snackbar);
   }

@@ -1,5 +1,6 @@
 import React from '../../web_modules/react.js';
 import { PanelHeader, PanelHeaderBack } from '../../web_modules/@vkontakte/vkui.js';
+import { themeName } from '../types.js';
 import Post from '../components/Post/Post.js'; // interface NewsfeedState {}
 
 export class Newsfeed extends React.Component {
@@ -11,7 +12,8 @@ export class Newsfeed extends React.Component {
   render() {
     const {
       setPanel,
-      walls
+      walls,
+      theme
     } = this.props;
     console.log('walls', walls); // const {  } = this.state;
 
@@ -20,7 +22,7 @@ export class Newsfeed extends React.Component {
       left: /*#__PURE__*/React.createElement(PanelHeaderBack, {
         onClick: () => setPanel('map')
       })
-    }, "\u041D\u043E\u0432\u043E\u0441\u0442\u0438"), /*#__PURE__*/React.createElement("div", {
+    }, theme ? themeName[theme] : 'Новости'), /*#__PURE__*/React.createElement("div", {
       style: {
         backgroundColor: 'var(--background_page)',
         paddingTop: 1,

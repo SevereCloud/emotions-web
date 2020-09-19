@@ -451,14 +451,32 @@ export class MapComponent extends React.Component {
       }
     }, userCenter && /*#__PURE__*/React.createElement(Feature, {
       coordinates: userCenter
-    })), /*#__PURE__*/React.createElement(Layer, {
+    })), Object.keys(themeWalls).map(key =>
+    /*#__PURE__*/
+    // eslint-disable-next-line react/jsx-key
+    React.createElement(Layer, {
+      map: map,
+      id: `post${key}`,
+      type: "symbol",
+      layout: {
+        'icon-image': themeImage[key],
+        'icon-size': 0.3
+      },
+      minZoom: 12
+    }, themeWalls[key].map(wall =>
+    /*#__PURE__*/
+    // eslint-disable-next-line react/jsx-key
+    React.createElement(Feature, {
+      coordinates: getCord(wall.geo.coordinates)
+    })))), /*#__PURE__*/React.createElement(Layer, {
       map: map,
       id: "theme",
       type: "circle",
       paint: {
         'circle-radius': ['get', 'radius'],
         'circle-color': background_content(scheme)
-      }
+      },
+      maxZoom: 13
     }, this.points(themePoints).map(point =>
     /*#__PURE__*/
     // eslint-disable-next-line react/jsx-key
@@ -474,7 +492,8 @@ export class MapComponent extends React.Component {
       layout: {
         'icon-image': ['get', 'image'],
         'icon-size': ['get', 'size']
-      }
+      },
+      maxZoom: 13
     }, this.points(themePoints).map(point =>
     /*#__PURE__*/
     // eslint-disable-next-line react/jsx-key
@@ -484,25 +503,7 @@ export class MapComponent extends React.Component {
         size: point.size
       },
       coordinates: point.center
-    }))), Object.keys(themeWalls).map(key =>
-    /*#__PURE__*/
-    // eslint-disable-next-line react/jsx-key
-    React.createElement(Layer, {
-      map: map,
-      id: `post${key}`,
-      type: "circle",
-      paint: {
-        'circle-radius': 1,
-        'circle-color': background_content(scheme),
-        'circle-stroke-width': 1,
-        'circle-stroke-color': accent(scheme)
-      }
-    }, themeWalls[key].map(wall =>
-    /*#__PURE__*/
-    // eslint-disable-next-line react/jsx-key
-    React.createElement(Feature, {
-      coordinates: getCord(wall.geo.coordinates)
-    }))))), ready && /*#__PURE__*/React.createElement(ButtonFloating, {
+    })))), ready && /*#__PURE__*/React.createElement(ButtonFloating, {
       style: {
         position: 'absolute',
         right: 8,
